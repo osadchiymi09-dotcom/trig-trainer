@@ -7,7 +7,7 @@ export function todayKey(): string {
 }
 
 export function defaultProgress(): ProgressState {
-  return { cards: {}, quizScores: {}, mastered: [], streak: 0, lastStudyDay: '' }
+  return { cards: {}, mastered: [], streak: 0, lastStudyDay: '', deriveDone: {} }
 }
 
 export function loadProgress(): ProgressState {

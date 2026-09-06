@@ -1,30 +1,38 @@
 import { useEffect, useState } from 'react'
-import type { Topic } from '../types'
+import type { Formula } from '../types'
 
-type ContentFile = { topics: Topic[] }
-
-export function useContent() {
-  const [topics, setTopics] = useState<Topic[]>([])
-  const [error, setError] = useState<string | null>(null)
+export function useFormulas() {
+  const [formulas, setFormulas] = useState<Formula[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}content.json`)
-      .then((r) => {
-        if (!r.ok) throw new Error('Не удалось загрузить content.json')
-        return r.json() as Promise<ContentFile>
-      })
-      .then((data) => setTopics(data.topics))
-      .catch((e: Error) => setError(e.message))
-      .finally(() => setLoading(false))
+    let cancelled = false
+    ;(async () => {
+      try {
+        const base = import.meta.env.BASE_URL
+        const res = await fetch(`${base}content.json`)
+        if (!res.ok) throw new Error(`Не удалось загрузить content.json (${res.status})`)
+        const data = (await res.json()) as { formulas: Formula[] }
+        if (!cancelled) setFormulas(data.formulas ?? [])
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : 'Ошибка загрузки')
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
   }, [])
 
-  return { topics, error, loading }
+  return { formulas, loading, error }
 }
 
-export function groupBySection(topics: Topic[]): Record<string, Topic[]> {
-  return topics.reduce<Record<string, Topic[]>>((acc, t) => {
-    ;(acc[t.section] ??= []).push(t)
-    return acc
-  }, {})
+export function groupBySection(formulas: Formula[]): Record<string, Formula[]> {
+  const out: Record<string, Formula[]> = {}
+  for (const f of formulas) {
+    ;(out[f.section] ??= []).push(f)
+  }
+  return out
 }

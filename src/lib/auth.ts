@@ -64,7 +64,11 @@ export function loginOrRegister(rawLogin: string): { login: string; isNew: boole
   const existing = db.users[login]
   if (existing) {
     localStorage.setItem(SESSION_KEY, login)
-    return { login, isNew: false, progress: { ...defaultProgress(), ...existing.progress } }
+    const merged = { ...defaultProgress(), ...existing.progress }
+    merged.deriveDone = existing.progress.deriveDone ?? {}
+    merged.mastered = existing.progress.mastered ?? []
+    merged.cards = existing.progress.cards ?? {}
+    return { login, isNew: false, progress: merged }
   }
 
   const now = new Date().toISOString()
@@ -88,20 +92,9 @@ export function saveUserProgress(login: string, progress: ProgressState): void {
   saveDatabase(db)
 }
 
-export function computeMasteryPercent(progress: ProgressState, topicCount: number): number {
-  if (topicCount <= 0) return 0
-  const quizVals = Object.values(progress.quizScores)
-  if (!quizVals.length && !progress.mastered.length) {
-    const reviewed = Object.keys(progress.cards).length
-    // rough early signal from cards alone
-    return Math.min(100, Math.round((reviewed / Math.max(topicCount * 8, 1)) * 100))
-  }
-  const mastered = progress.mastered.length
-  const avgBest =
-    quizVals.length > 0
-      ? quizVals.reduce((s, q) => s + q.best, 0) / quizVals.length
-      : 0
-  // blend mastered topics and average best quiz scores
-  const byMastered = (mastered / topicCount) * 100
-  return Math.round(Math.min(100, byMastered * 0.55 + avgBest * 0.45))
+export function computeMasteryPercent(progress: ProgressState, formulaCount: number): number {
+  if (formulaCount <= 0) return 0
+  const known = progress.mastered.length
+  const derived = Object.keys(progress.deriveDone ?? {}).length
+  return Math.round(Math.min(100, ((known + derived) / (formulaCount * 2)) * 100))
 }

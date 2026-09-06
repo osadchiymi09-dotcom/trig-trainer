@@ -1,51 +1,10 @@
-export type ConspectBlock = {
-  heading: string
-  bullets: string[]
-}
-
-export type Flashcard = {
+export type Formula = {
   id: string
-  front: string
-  back: string
-  hint?: string
-}
-
-export type QuizItem = {
-  id: string
-  question: string
-  options: string[]
-  correct: number
-  explain: string
-}
-
-export type ClozeItem = {
-  id: string
-  text: string // use [[answer]] markers
-  hint?: string
-}
-
-export type DeriveItem = {
-  id: string
-  prompt: string
+  section: string
+  title: string
   formula: string
   steps: string[]
-}
-
-export type Topic = {
-  id: string
-  code: string
-  title: string
-  section: string
-  bookPages: string
-  why: string
-  conspect: ConspectBlock[]
-  flashcards: Flashcard[]
-  quiz: QuizItem[]
-  cloze: ClozeItem[]
-  recall: string[]
-  mnemonics: string[]
-  diagrams?: string[]
-  derive?: DeriveItem[]
+  tip?: string
 }
 
 export type CardState = {
@@ -56,10 +15,13 @@ export type CardState = {
   lapses: number
 }
 
+/** Progress keyed by formula id */
 export type ProgressState = {
   cards: Record<string, CardState>
-  quizScores: Record<string, { best: number; last: number; attempts: number }>
+  /** formula ids marked as known */
   mastered: string[]
   streak: number
   lastStudyDay: string
+  /** optional: how many times derivation was completed */
+  deriveDone: Record<string, number>
 }

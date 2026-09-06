@@ -1,13 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import {
-  ClozeMode,
-  ConspectMode,
-  DeriveMode,
-  FlashcardMode,
-  QuizMode,
-  RecallMode,
-} from './components/Modes'
 import { LoginScreen } from './components/LoginScreen'
+import { DeriveWalkthrough, FormulaDrill, FormulaPage } from './components/Study'
+import { MathText } from './components/MathText'
 import {
   clearSession,
   computeMasteryPercent,
@@ -15,33 +9,19 @@ import {
   loginOrRegister,
   saveUserProgress,
 } from './lib/auth'
-import {
-  isDue,
-  reviewCard,
-  touchStreak,
-} from './lib/progress'
-import { groupBySection, useContent } from './lib/useContent'
-import type { ProgressState, Topic } from './types'
+import { isDue, reviewCard, touchStreak } from './lib/progress'
+import { groupBySection, useFormulas } from './lib/useContent'
+import type { Formula, ProgressState } from './types'
 import './App.css'
 
-type Mode = 'conspect' | 'derive' | 'flash' | 'quiz' | 'cloze' | 'recall'
-type View = { name: 'home' } | { name: 'topic'; topicId: string; mode: Mode }
-
-const MODES: { id: Mode; label: string; tip: string }[] = [
-  { id: 'conspect', label: 'Конспект', tip: 'Формулы + теория' },
-  { id: 'derive', label: 'Вывод', tip: 'Шаги доказательства' },
-  { id: 'flash', label: 'Карточки', tip: 'Active recall + интервалы' },
-  { id: 'quiz', label: 'Тест', tip: 'Выбор ответа' },
-  { id: 'cloze', label: 'Пропуски', tip: 'Cloze deletion' },
-  { id: 'recall', label: 'Вслух', tip: 'Свободный ответ' },
-]
-
-function dueCount(topic: Topic, progress: ProgressState): number {
-  return topic.flashcards.filter((c) => isDue(progress.cards[c.id])).length
-}
+type View =
+  | { name: 'list' }
+  | { name: 'formula'; id: string }
+  | { name: 'derive'; id: string }
+  | { name: 'drill'; filter: 'all' | 'due' | 'section'; section?: string }
 
 export default function App() {
-  const { topics, loading, error } = useContent()
+  const { formulas, loading, error } = useFormulas()
   const [user, setUser] = useState<string | null>(() => getSessionLogin())
   const [progress, setProgress] = useState<ProgressState | null>(() => {
     const login = getSessionLogin()
@@ -52,7 +32,7 @@ export default function App() {
       return null
     }
   })
-  const [view, setView] = useState<View>({ name: 'home' })
+  const [view, setView] = useState<View>({ name: 'list' })
   const [query, setQuery] = useState('')
 
   useEffect(() => {
@@ -60,37 +40,36 @@ export default function App() {
     saveUserProgress(user, progress)
   }, [user, progress])
 
-  const sections = useMemo(() => groupBySection(topics), [topics])
-  const topic = useMemo(
-    () =>
-      view.name === 'topic' ? topics.find((t) => t.id === view.topicId) : undefined,
-    [view, topics],
-  )
+  const sections = useMemo(() => groupBySection(formulas), [formulas])
+  const byId = useMemo(() => {
+    const m = new Map<string, Formula>()
+    for (const f of formulas) m.set(f.id, f)
+    return m
+  }, [formulas])
 
-  const totalCards = topics.reduce((n, t) => n + t.flashcards.length, 0)
-  const dueTotal = progress
-    ? topics.reduce((n, t) => n + dueCount(t, progress), 0)
+  const mastery = progress ? computeMasteryPercent(progress, formulas.length) : 0
+  const knownN = progress?.mastered.length ?? 0
+  const dueN = progress
+    ? formulas.filter((f) => isDue(progress.cards[f.id])).length
     : 0
-  const mastered = progress?.mastered.length ?? 0
-  const mastery = progress ? computeMasteryPercent(progress, topics.length) : 0
 
-  const filtered = useMemo(() => {
+  const filteredSections = useMemo(() => {
     const q = query.trim().toLowerCase()
     if (!q) return sections
-    const out: Record<string, Topic[]> = {}
+    const out: Record<string, Formula[]> = {}
     for (const [sec, list] of Object.entries(sections)) {
       const hit = list.filter(
-        (t) =>
-          t.title.toLowerCase().includes(q) ||
-          t.code.includes(q) ||
-          t.why.toLowerCase().includes(q),
+        (f) =>
+          f.title.toLowerCase().includes(q) ||
+          f.formula.toLowerCase().includes(q) ||
+          f.section.toLowerCase().includes(q),
       )
       if (hit.length) out[sec] = hit
     }
     return out
   }, [sections, query])
 
-  const patchProgress = (fn: (p: ProgressState) => ProgressState) => {
+  const patch = (fn: (p: ProgressState) => ProgressState) => {
     setProgress((p) => (p ? touchStreak(fn(p)) : p))
   }
 
@@ -98,7 +77,7 @@ export default function App() {
     clearSession()
     setUser(null)
     setProgress(null)
-    setView({ name: 'home' })
+    setView({ name: 'list' })
   }
 
   if (loading) return <div className="boot">Загрузка формул…</div>
@@ -115,82 +94,99 @@ export default function App() {
     )
   }
 
-  if (view.name === 'topic' && topic) {
+  const current =
+    view.name === 'formula' || view.name === 'derive' ? byId.get(view.id) : undefined
+
+  if (view.name === 'formula' && current) {
+    return (
+      <div className="app">
+        <FormulaPage
+          formula={current}
+          known={progress.mastered.includes(current.id)}
+          derivedCount={progress.deriveDone[current.id] ?? 0}
+          onBack={() => setView({ name: 'list' })}
+          onToggleKnown={() =>
+            patch((p) => {
+              const set = new Set(p.mastered)
+              if (set.has(current.id)) set.delete(current.id)
+              else set.add(current.id)
+              return { ...p, mastered: [...set] }
+            })
+          }
+          onStudyDerive={() => setView({ name: 'derive', id: current.id })}
+        />
+      </div>
+    )
+  }
+
+  if (view.name === 'derive' && current) {
     return (
       <div className="app">
         <header className="topbar">
-          <button type="button" className="back" onClick={() => setView({ name: 'home' })}>
-            ← Темы
+          <button type="button" className="back" onClick={() => setView({ name: 'formula', id: current.id })}>
+            ← К формуле
+          </button>
+          <div className="user-pill">
+            <span>{user}</span>
+          </div>
+        </header>
+        <DeriveWalkthrough
+          formula={current}
+          onDone={() => {
+            patch((p) => ({
+              ...p,
+              deriveDone: {
+                ...p.deriveDone,
+                [current.id]: (p.deriveDone[current.id] ?? 0) + 1,
+              },
+            }))
+            // go to next formula in same section if any
+            const list = sections[current.section] ?? []
+            const idx = list.findIndex((f) => f.id === current.id)
+            const next = list[idx + 1]
+            if (next) setView({ name: 'derive', id: next.id })
+            else setView({ name: 'formula', id: current.id })
+          }}
+        />
+      </div>
+    )
+  }
+
+  if (view.name === 'drill') {
+    let pool = formulas
+    if (view.filter === 'due') pool = formulas.filter((f) => isDue(progress.cards[f.id]))
+    if (view.filter === 'section' && view.section) {
+      pool = formulas.filter((f) => f.section === view.section)
+    }
+    return (
+      <div className="app">
+        <header className="topbar">
+          <button type="button" className="back" onClick={() => setView({ name: 'list' })}>
+            ← Список
           </button>
           <div className="topbar-title">
-            <span className="code">{topic.code}</span>
-            <h1>{topic.title}</h1>
+            <h1>Тренировка</h1>
           </div>
           <div className="user-pill">
             <span>{user}</span>
-            <button type="button" className="linkish" onClick={logout}>
-              Выйти
-            </button>
           </div>
         </header>
-
-        <nav className="mode-nav" aria-label="Режимы">
-          {MODES.map((m) => (
-            <button
-              key={m.id}
-              type="button"
-              className={view.mode === m.id ? 'active' : ''}
-              onClick={() => setView({ name: 'topic', topicId: topic.id, mode: m.id })}
-              title={m.tip}
-            >
-              {m.label}
-            </button>
-          ))}
-        </nav>
-
         <main className="stage">
-          {view.mode === 'conspect' && <ConspectMode topic={topic} />}
-          {view.mode === 'derive' && <DeriveMode topic={topic} />}
-          {view.mode === 'flash' && (
-            <FlashcardMode
-              topic={topic}
-              getGrade={(cardId, grade) =>
-                patchProgress((p) => ({
-                  ...p,
-                  cards: {
-                    ...p.cards,
-                    [cardId]: reviewCard(p.cards[cardId], grade),
-                  },
-                }))
-              }
-            />
-          )}
-          {view.mode === 'quiz' && (
-            <QuizMode
-              topic={topic}
-              onFinish={(score) =>
-                patchProgress((p) => {
-                  const prev = p.quizScores[topic.id]
-                  const masteredSet = new Set(p.mastered)
-                  if (score >= 80) masteredSet.add(topic.id)
-                  return {
-                    ...p,
-                    quizScores: {
-                      ...p.quizScores,
-                      [topic.id]: {
-                        best: Math.max(prev?.best ?? 0, score),
-                        last: score,
-                        attempts: (prev?.attempts ?? 0) + 1,
-                      },
-                    },
-                    mastered: [...masteredSet],
-                  }
-                })
-              }
-            />
-          )}
-          {view.mode === 'cloze' && <ClozeMode topic={topic} />}
-          {view.mode === 'recall' && <RecallMode topic={topic} />}
+          <FormulaDrill
+            items={pool}
+            onGrade={(id, grade) =>
+              patch((p) => {
+                const cards = {
+                  ...p.cards,
+                  [id]: reviewCard(p.cards[id], grade),
+                }
+                const mastered = new Set(p.mastered)
+                if (grade === 3) mastered.add(id)
+                if (grade === 0) mastered.delete(id)
+                return { ...p, cards, mastered: [...mastered] }
+              })
+            }
+          />
         </main>
       </div>
     )
@@ -200,7 +196,7 @@ export default function App() {
     <div className="app home">
       <header className="hero">
         <div className="hero-top">
-          <p className="brand">Тригонометрия · формулы и выводы</p>
+          <p className="brand">Тригонометрия</p>
           <div className="user-pill">
             <span>{user}</span>
             <strong>{mastery}%</strong>
@@ -209,64 +205,85 @@ export default function App() {
             </button>
           </div>
         </div>
-        <h1>Тренажёр формул</h1>
+        <h1>Список формул и выводов</h1>
         <p className="hero-sub">
-          Не только заучить, но и вывести: конспект, пошаговые доказательства, карточки и
-          тесты. Прогресс привязан к логину <strong>{user}</strong>.
+          Открой формулу → прочитай вывод → отметь «знаю» или пройди шаги. Потом гоняй
+          карточками.
         </p>
         <div className="stats">
           <div>
-            <strong>{topics.length}</strong>
-            <span>тем</span>
+            <strong>{formulas.length}</strong>
+            <span>формул</span>
           </div>
           <div>
-            <strong>{dueTotal}</strong>
-            <span>карточек к повтору</span>
+            <strong>{knownN}</strong>
+            <span>знаю</span>
           </div>
           <div>
-            <strong>{mastered}</strong>
-            <span>тем ≥80%</span>
+            <strong>{dueN}</strong>
+            <span>к повтору</span>
           </div>
           <div>
             <strong>{progress.streak}</strong>
-            <span>дней подряд</span>
+            <span>дней</span>
           </div>
+        </div>
+        <div className="hero-actions">
+          <button type="button" className="btn" onClick={() => setView({ name: 'drill', filter: 'due' })}>
+            Повторить ({dueN})
+          </button>
+          <button
+            type="button"
+            className="btn secondary"
+            onClick={() => setView({ name: 'drill', filter: 'all' })}
+          >
+            Тренировать все
+          </button>
         </div>
       </header>
 
       <div className="toolbar">
         <input
           className="search"
-          placeholder="Поиск темы…"
+          placeholder="Найти формулу…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <p className="toolbar-note">{totalCards} карточек в базе</p>
       </div>
 
       <div className="sections">
-        {Object.entries(filtered).map(([section, list]) => (
+        {Object.entries(filteredSections).map(([section, list]) => (
           <section key={section} className="section">
-            <h2>{section}</h2>
-            <ul className="topic-list">
-              {list.map((t) => {
-                const due = dueCount(t, progress)
-                const score = progress.quizScores[t.id]
+            <div className="section-head">
+              <h2>{section}</h2>
+              <button
+                type="button"
+                className="linkish"
+                onClick={() => setView({ name: 'drill', filter: 'section', section })}
+              >
+                Учить раздел
+              </button>
+            </div>
+            <ul className="formula-list">
+              {list.map((f) => {
+                const known = progress.mastered.includes(f.id)
+                const derived = (progress.deriveDone[f.id] ?? 0) > 0
                 return (
-                  <li key={t.id}>
+                  <li key={f.id}>
                     <button
                       type="button"
-                      className="topic-row"
-                      onClick={() =>
-                        setView({ name: 'topic', topicId: t.id, mode: 'conspect' })
-                      }
+                      className="formula-row"
+                      onClick={() => setView({ name: 'formula', id: f.id })}
                     >
-                      <span className="topic-code">{t.code}</span>
-                      <span className="topic-title">{t.title}</span>
-                      <span className="topic-meta">
-                        {score ? `${score.best}%` : '0%'}
-                        {due > 0 ? ` · ${due} due` : ''}
-                        {(t.derive?.length ?? 0) > 0 ? ` · ${t.derive!.length} выв.` : ''}
+                      <span className="formula-row-title">
+                        {f.title}
+                        <span className="marks">
+                          {known ? ' · знаю' : ''}
+                          {derived ? ' · вывод' : ''}
+                        </span>
+                      </span>
+                      <span className="formula-row-math">
+                        <MathText text={f.formula} />
                       </span>
                     </button>
                   </li>

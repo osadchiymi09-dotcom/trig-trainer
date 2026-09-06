@@ -27,11 +27,10 @@ export function LoginScreen({
   return (
     <div className="login-page">
       <div className="login-card">
-        <p className="brand">Тригонометрия · тренажёр</p>
+        <p className="brand">Тригонометрия</p>
         <h1>Вход</h1>
         <p className="hero-sub">
-          Введи логин. Новый — прогресс 0%. Формулы и выводы: конспект, режим «Вывод»,
-          карточки и тесты. Прогресс хранится в этом браузере.
+          Список формул с выводами + тренировка. Прогресс по логину в этом браузере.
         </p>
 
         <form onSubmit={submit} className="login-form">
