@@ -1,0 +1,1628 @@
+{
+  "topics": [
+    {
+      "id": "1",
+      "code": "1",
+      "title": "Единичная окружность и определения",
+      "section": "1. База",
+      "why": "Без окружности не выучишь ни знаки, ни приведение, ни табличные значения.",
+      "bookPages": "лист 1",
+      "diagrams": [
+        "sheet-1"
+      ],
+      "conspect": [
+        {
+          "heading": "Определения на окружности",
+          "bullets": [
+            "Единичная окружность: центр $(0;0)$, радиус $1$.",
+            "Точка $M(\\cos\\alpha;\\sin\\alpha)$ — конец радиус-вектора угла $\\alpha$.",
+            "$\\operatorname{tg}\\alpha$ — отрезок на касательной $x=1$; $\\operatorname{ctg}\\alpha$ — на $y=1$.",
+            "$\\operatorname{tg}\\alpha=\\dfrac{\\sin\\alpha}{\\cos\\alpha}$, $\\operatorname{ctg}\\alpha=\\dfrac{\\cos\\alpha}{\\sin\\alpha}$, $\\operatorname{tg}\\alpha\\cdot\\operatorname{ctg}\\alpha=1$."
+          ]
+        },
+        {
+          "heading": "Градусы ↔ радианы",
+          "bullets": [
+            "$\\alpha_{\\text{рад}}=\\alpha^\\circ\\cdot\\dfrac{\\pi}{180^\\circ}$.",
+            "$\\alpha^\\circ=\\alpha_{\\text{рад}}\\cdot\\dfrac{180^\\circ}{\\pi}$.",
+            "Полный оборот: $360^\\circ=2\\pi$."
+          ]
+        },
+        {
+          "heading": "Таблица (запомни через геометрию)",
+          "bullets": [
+            "$0$: $\\sin=0$, $\\cos=1$; $\\pi/6$: $\\sin=1/2$, $\\cos=\\sqrt{3}/2$.",
+            "$\\pi/4$: $\\sin=\\cos=\\sqrt{2}/2$; $\\pi/3$: $\\sin=\\sqrt{3}/2$, $\\cos=1/2$.",
+            "$\\pi/2$: $\\sin=1$, $\\cos=0$. Дальше — знаки по четвертям."
+          ]
+        },
+        {
+          "heading": "Вывод: почему $\\operatorname{tg}=\\sin/\\cos$",
+          "bullets": [
+            "На касательной $x=1$ луч угла пересекает её в точке $(1; t)$.",
+            "Подобие треугольников: $\\dfrac{t}{1}=\\dfrac{\\sin\\alpha}{\\cos\\alpha}$ ⇒ $t=\\operatorname{tg}\\alpha$.",
+            "Аналогично для $\\operatorname{ctg}$ на горизонтальной касательной $y=1$."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "1-fc-1",
+          "front": "Координаты точки на единичной окружности?",
+          "back": "$(x;y)=(\\cos\\alpha;\\sin\\alpha)$"
+        },
+        {
+          "id": "1-fc-2",
+          "front": "Формула $\\operatorname{tg}\\alpha$?",
+          "back": "$\\operatorname{tg}\\alpha=\\sin\\alpha/\\cos\\alpha$"
+        },
+        {
+          "id": "1-fc-3",
+          "front": "Формула $\\operatorname{ctg}\\alpha$?",
+          "back": "$\\operatorname{ctg}\\alpha=\\cos\\alpha/\\sin\\alpha$"
+        },
+        {
+          "id": "1-fc-4",
+          "front": "$\\sin(\\pi/6)$ и $\\cos(\\pi/6)$?",
+          "back": "$1/2$ и $\\sqrt{3}/2$"
+        },
+        {
+          "id": "1-fc-5",
+          "front": "$\\sin(\\pi/4)$ и $\\cos(\\pi/4)$?",
+          "back": "$\\sqrt{2}/2$ и $\\sqrt{2}/2$"
+        },
+        {
+          "id": "1-fc-6",
+          "front": "$\\sin(\\pi/3)$ и $\\cos(\\pi/3)$?",
+          "back": "$\\sqrt{3}/2$ и $1/2$"
+        },
+        {
+          "id": "1-fc-7",
+          "front": "Как градусы → радианы?",
+          "back": "$\\alpha\\cdot\\pi/180$"
+        },
+        {
+          "id": "1-fc-8",
+          "front": "Почему $\\operatorname{tg}\\alpha\\cdot\\operatorname{ctg}\\alpha=1$?",
+          "back": "Потому что $(\\sin/\\cos)\\cdot(\\cos/\\sin)=1$"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "1-qz-1",
+          "question": "Точка на единичной окружности:",
+          "options": [
+            "$(\\sin\\alpha;\\cos\\alpha)$",
+            "$(\\cos\\alpha;\\sin\\alpha)$",
+            "$(\\operatorname{tg}\\alpha;\\operatorname{ctg}\\alpha)$",
+            "$(1;\\alpha)$"
+          ],
+          "correct": 1,
+          "explain": "По определению $x=\\cos$, $y=\\sin$."
+        },
+        {
+          "id": "1-qz-2",
+          "question": "$\\sin(\\pi/3)=$ ?",
+          "options": [
+            "$1/2$",
+            "$\\sqrt{2}/2$",
+            "$\\sqrt{3}/2$",
+            "$1$"
+          ],
+          "correct": 2,
+          "explain": "Угол $60^\\circ$: синус $\\sqrt{3}/2$."
+        },
+        {
+          "id": "1-qz-3",
+          "question": "$90^\\circ$ в радианах:",
+          "options": [
+            "$\\pi$",
+            "$\\pi/2$",
+            "$\\pi/3$",
+            "$2\\pi$"
+          ],
+          "correct": 1,
+          "explain": "$90\\cdot\\pi/180=\\pi/2$."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "1-cz-1",
+          "text": "На единичной окружности $x=[[\\cos\\alpha]]$, $y=[[\\sin\\alpha]]$."
+        },
+        {
+          "id": "1-cz-2",
+          "text": "$\\operatorname{tg}\\alpha=[[\\sin\\alpha/\\cos\\alpha]]$."
+        },
+        {
+          "id": "1-cz-3",
+          "text": "$\\alpha_{\\text{рад}}=\\alpha^\\circ\\cdot[[\\pi/180]]$."
+        }
+      ],
+      "recall": [
+        "Нарисуй единичную окружность и отметь $\\pi/6,\\pi/4,\\pi/3,\\pi/2$.",
+        "Объясни геометрически, что такое $\\operatorname{tg}\\alpha$.",
+        "Переведи $150^\\circ$ в радианы и наоборот $\\dfrac{5\\pi}{6}$ в градусы."
+      ],
+      "mnemonics": [
+        "«Косинус — вдоль оси x, синус — вверх»",
+        "Таблица: $0,1/2,\\sqrt{2}/2,\\sqrt{3}/2,1$ для sin от $0$ до $90^\\circ$"
+      ],
+      "derive": [
+        {
+          "id": "1-dr-1",
+          "prompt": "Выведи $\\operatorname{tg}\\alpha=\\sin\\alpha/\\cos\\alpha$ с окружности",
+          "formula": "$\\operatorname{tg}\\alpha=\\dfrac{\\sin\\alpha}{\\cos\\alpha}$",
+          "steps": [
+            "Возьми точку $M(\\cos\\alpha;\\sin\\alpha)$ на окружности.",
+            "Проведи касательную $x=1$; луч угла пересекает её в $(1;t)$.",
+            "Треугольники подобны: $\\dfrac{t}{1}=\\dfrac{\\sin\\alpha}{\\cos\\alpha}$.",
+            "Значит $t=\\operatorname{tg}\\alpha=\\sin\\alpha/\\cos\\alpha$."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "code": "2",
+      "title": "Основное тождество и следствия",
+      "section": "1. База",
+      "why": "Это Пифагор на окружности — из него почти всё остальное.",
+      "bookPages": "лист 1",
+      "conspect": [
+        {
+          "heading": "Формулы",
+          "bullets": [
+            "$\\sin^2\\alpha+\\cos^2\\alpha=1$.",
+            "$\\sin\\alpha=\\pm\\sqrt{1-\\cos^2\\alpha}$, $\\cos\\alpha=\\pm\\sqrt{1-\\sin^2\\alpha}$.",
+            "$1+\\operatorname{tg}^2\\alpha=\\dfrac{1}{\\cos^2\\alpha}$ ($\\alpha\\neq\\pi/2+\\pi n$).",
+            "$1+\\operatorname{ctg}^2\\alpha=\\dfrac{1}{\\sin^2\\alpha}$ ($\\alpha\\neq\\pi n$)."
+          ]
+        },
+        {
+          "heading": "Вывод основного тождества",
+          "bullets": [
+            "Точка $(\\cos\\alpha;\\sin\\alpha)$ лежит на окружности $x^2+y^2=1$.",
+            "Подставь: $\\cos^2\\alpha+\\sin^2\\alpha=1$."
+          ]
+        },
+        {
+          "heading": "Вывод для тангенса",
+          "bullets": [
+            "Раздели $\\sin^2+\\cos^2=1$ на $\\cos^2\\alpha$: $\\operatorname{tg}^2\\alpha+1=1/\\cos^2\\alpha$.",
+            "Аналогично деление на $\\sin^2$: $1+\\operatorname{ctg}^2=1/\\sin^2$."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "2-fc-1",
+          "front": "Основное тождество?",
+          "back": "$\\sin^2\\alpha+\\cos^2\\alpha=1$"
+        },
+        {
+          "id": "2-fc-2",
+          "front": "$1+\\operatorname{tg}^2\\alpha=$ ?",
+          "back": "$1/\\cos^2\\alpha$"
+        },
+        {
+          "id": "2-fc-3",
+          "front": "$1+\\operatorname{ctg}^2\\alpha=$ ?",
+          "back": "$1/\\sin^2\\alpha$"
+        },
+        {
+          "id": "2-fc-4",
+          "front": "Как получить $1+\\operatorname{tg}^2$ из основного?",
+          "back": "Разделить на $\\cos^2\\alpha$"
+        },
+        {
+          "id": "2-fc-5",
+          "front": "Откуда $\\sin^2+\\cos^2=1$?",
+          "back": "Из $x^2+y^2=1$ на единичной окружности"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "2-qz-1",
+          "question": "Если $\\cos\\alpha=3/5$ (I четв.), $\\sin\\alpha=$ ?",
+          "options": [
+            "$4/5$",
+            "$-4/5$",
+            "$3/5$",
+            "$5/3$"
+          ],
+          "correct": 0,
+          "explain": "$\\sin=\\sqrt{1-(3/5)^2}=4/5$."
+        },
+        {
+          "id": "2-qz-2",
+          "question": "$1+\\operatorname{tg}^2\\alpha$ равно:",
+          "options": [
+            "$\\sin^2\\alpha$",
+            "$1/\\cos^2\\alpha$",
+            "$1/\\sin^2\\alpha$",
+            "$\\cos^2\\alpha$"
+          ],
+          "correct": 1,
+          "explain": "Делим основное тождество на $\\cos^2$."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "2-cz-1",
+          "text": "$\\sin^2\\alpha+\\cos^2\\alpha=[[1]]$."
+        },
+        {
+          "id": "2-cz-2",
+          "text": "$1+\\operatorname{tg}^2\\alpha=[[1/\\cos^2\\alpha]]$."
+        }
+      ],
+      "recall": [
+        "Выведи $1+\\operatorname{tg}^2\\alpha=1/\\cos^2\\alpha$ вслух по шагам.",
+        "Почему в $\\sin=\\pm\\sqrt{1-\\cos^2}$ есть два знака?"
+      ],
+      "derive": [
+        {
+          "id": "2-dr-1",
+          "prompt": "Выведи основное тождество",
+          "formula": "$\\sin^2\\alpha+\\cos^2\\alpha=1$",
+          "steps": [
+            "По определению точка $M(\\cos\\alpha;\\sin\\alpha)$ на окружности радиуса 1.",
+            "Уравнение окружности: $x^2+y^2=1$.",
+            "Подстановка даёт $\\cos^2\\alpha+\\sin^2\\alpha=1$."
+          ]
+        },
+        {
+          "id": "2-dr-2",
+          "prompt": "Выведи $1+\\operatorname{tg}^2\\alpha=1/\\cos^2\\alpha$",
+          "formula": "$1+\\operatorname{tg}^2\\alpha=\\dfrac{1}{\\cos^2\\alpha}$",
+          "steps": [
+            "Старт: $\\sin^2\\alpha+\\cos^2\\alpha=1$.",
+            "Раздели обе части на $\\cos^2\\alpha$ (где $\\cos\\neq 0$).",
+            "Получи $\\operatorname{tg}^2\\alpha+1=1/\\cos^2\\alpha$."
+          ]
+        }
+      ],
+      "diagrams": [],
+      "mnemonics": []
+    },
+    {
+      "id": "3",
+      "code": "3",
+      "title": "Периодичность и чётность",
+      "section": "1. База",
+      "why": "Нужно для приведения углов и решений уравнений.",
+      "bookPages": "лист 1",
+      "conspect": [
+        {
+          "heading": "Периоды",
+          "bullets": [
+            "$\\sin$ и $\\cos$: наименьший период $T=2\\pi$.",
+            "$\\operatorname{tg}$ и $\\operatorname{ctg}$: наименьший период $T=\\pi$.",
+            "Вообще: $\\sin(x+2\\pi k)=\\sin x$, $\\operatorname{tg}(x+\\pi k)=\\operatorname{tg} x$."
+          ]
+        },
+        {
+          "heading": "Чётность",
+          "bullets": [
+            "$\\sin(-x)=-\\sin x$ — нечётная.",
+            "$\\cos(-x)=\\cos x$ — чётная.",
+            "$\\operatorname{tg}(-x)=-\\operatorname{tg} x$, $\\operatorname{ctg}(-x)=-\\operatorname{ctg} x$ — нечётные."
+          ]
+        },
+        {
+          "heading": "Вывод чётности косинуса",
+          "bullets": [
+            "Углы $x$ и $-x$ симметричны относительно оси $Ox$.",
+            "Одинаковая $x$-координата ⇒ $\\cos(-x)=\\cos x$.",
+            "$y$-координаты противоположны ⇒ $\\sin(-x)=-\\sin x$."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "3-fc-1",
+          "front": "Период $\\sin$ и $\\cos$?",
+          "back": "$2\\pi$"
+        },
+        {
+          "id": "3-fc-2",
+          "front": "Период $\\operatorname{tg}$ и $\\operatorname{ctg}$?",
+          "back": "$\\pi$"
+        },
+        {
+          "id": "3-fc-3",
+          "front": "$\\cos(-x)=$ ?",
+          "back": "$\\cos x$ (чётная)"
+        },
+        {
+          "id": "3-fc-4",
+          "front": "$\\sin(-x)=$ ?",
+          "back": "$-\\sin x$ (нечётная)"
+        },
+        {
+          "id": "3-fc-5",
+          "front": "$\\operatorname{tg}(-x)=$ ?",
+          "back": "$-\\operatorname{tg} x$"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "3-qz-1",
+          "question": "Наименьший период тангенса:",
+          "options": [
+            "$2\\pi$",
+            "$\\pi$",
+            "$\\pi/2$",
+            "$4\\pi$"
+          ],
+          "correct": 1,
+          "explain": "tg имеет период $\\pi$."
+        },
+        {
+          "id": "3-qz-2",
+          "question": "Какая функция чётная?",
+          "options": [
+            "$\\sin$",
+            "$\\cos$",
+            "$\\operatorname{tg}$",
+            "$\\operatorname{ctg}$"
+          ],
+          "correct": 1,
+          "explain": "Только косинус из «большой четвёрки» чётный."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "3-cz-1",
+          "text": "Период синуса — $[[2\\pi]]$."
+        },
+        {
+          "id": "3-cz-2",
+          "text": "$\\cos(-x)=[[\\cos x]]$."
+        }
+      ],
+      "recall": [
+        "Объясни на окружности, почему cos чётный, а sin нечётный.",
+        "Почему у tg период $\\pi$, а не $2\\pi$?"
+      ],
+      "derive": [
+        {
+          "id": "3-dr-1",
+          "prompt": "Объясни период тангенса $\\pi$",
+          "formula": "$\\operatorname{tg}(x+\\pi)=\\operatorname{tg} x$",
+          "steps": [
+            "$\\operatorname{tg}(x+\\pi)=\\sin(x+\\pi)/\\cos(x+\\pi)$.",
+            "$\\sin(x+\\pi)=-\\sin x$, $\\cos(x+\\pi)=-\\cos x$.",
+            "Минус на минус: $(-\\sin)/(-\\cos)=\\sin/\\cos=\\operatorname{tg} x$."
+          ]
+        }
+      ],
+      "diagrams": [],
+      "mnemonics": []
+    },
+    {
+      "id": "4",
+      "code": "4",
+      "title": "Знаки тригонометрических функций",
+      "section": "1. База",
+      "why": "Критично для формул приведения и выбора знака корня.",
+      "bookPages": "лист 2",
+      "diagrams": [
+        "sheet-2"
+      ],
+      "conspect": [
+        {
+          "heading": "По четвертям",
+          "bullets": [
+            "$\\sin$: $+$ в I, II; $-$ в III, IV.",
+            "$\\cos$: $+$ в I, IV; $-$ в II, III.",
+            "$\\operatorname{tg},\\operatorname{ctg}$: $+$ в I, III; $-$ в II, IV."
+          ]
+        },
+        {
+          "heading": "Как запомнить",
+          "bullets": [
+            "Sin — «высота» (y): плюс сверху (I–II).",
+            "Cos — «вправо» (x): плюс справа (I, IV).",
+            "Tg = sin/cos: плюс, когда знаки одинаковы (I и III)."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "4-fc-1",
+          "front": "Где $\\sin>0$?",
+          "back": "I и II четверти"
+        },
+        {
+          "id": "4-fc-2",
+          "front": "Где $\\cos>0$?",
+          "back": "I и IV четверти"
+        },
+        {
+          "id": "4-fc-3",
+          "front": "Где $\\operatorname{tg}>0$?",
+          "back": "I и III четверти"
+        },
+        {
+          "id": "4-fc-4",
+          "front": "Знак $\\cos$ во II четверти?",
+          "back": "−"
+        },
+        {
+          "id": "4-fc-5",
+          "front": "Знак $\\sin$ в IV четверти?",
+          "back": "−"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "4-qz-1",
+          "question": "Во II четверти положительны:",
+          "options": [
+            "$\\sin$",
+            "$\\cos$",
+            "$\\operatorname{tg}$",
+            "все"
+          ],
+          "correct": 0,
+          "explain": "Только синус > 0 во II."
+        },
+        {
+          "id": "4-qz-2",
+          "question": "В III четверти $\\operatorname{tg}$:",
+          "options": [
+            "$>0$",
+            "$<0$",
+            "$=0$",
+            "не определён"
+          ],
+          "correct": 0,
+          "explain": "sin и cos оба отрицательны ⇒ tg > 0."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "4-cz-1",
+          "text": "Синус положителен в четвертях [[I]] и [[II]]."
+        },
+        {
+          "id": "4-cz-2",
+          "text": "Косинус положителен в четвертях [[I]] и [[IV]]."
+        }
+      ],
+      "recall": [
+        "Нарисуй три круга со знаками sin, cos, tg.",
+        "В какой четверти все три sin, cos, tg отрицательны? (нет такой — проверь)"
+      ],
+      "mnemonics": [
+        "All Students Take Calculus: All / Sin / Tg / Cos по четвертям (английская мнемоника)"
+      ],
+      "derive": []
+    },
+    {
+      "id": "5",
+      "code": "5",
+      "title": "Формулы приведения",
+      "section": "2. Преобразования",
+      "why": "Сводишь любой угол к острому — must-have для ЕГЭ/школы.",
+      "bookPages": "лист 2",
+      "conspect": [
+        {
+          "heading": "Два правила",
+          "bullets": [
+            "Знак справа = знак исходной функции в той четверти, куда попадает угол при $\\alpha\\in(0;\\pi/2)$.",
+            "Если сдвиг на $\\pi/2$ или $3\\pi/2$ — функция «меняется» (sin↔cos, tg↔ctg). Если на $\\pi$ или $2\\pi$ — имя то же."
+          ]
+        },
+        {
+          "heading": "Ключевые примеры",
+          "bullets": [
+            "$\\sin(\\pi/2-\\alpha)=\\cos\\alpha$, $\\cos(\\pi/2-\\alpha)=\\sin\\alpha$.",
+            "$\\sin(\\pi-\\alpha)=\\sin\\alpha$, $\\cos(\\pi-\\alpha)=-\\cos\\alpha$.",
+            "$\\sin(\\pi+\\alpha)=-\\sin\\alpha$, $\\cos(\\pi+\\alpha)=-\\cos\\alpha$.",
+            "$\\sin(2\\pi-\\alpha)=-\\sin\\alpha$, $\\cos(2\\pi-\\alpha)=\\cos\\alpha$."
+          ]
+        },
+        {
+          "heading": "Вывод через сложение",
+          "bullets": [
+            "$\\sin(\\pi/2-\\alpha)=\\sin(\\pi/2)\\cos\\alpha-\\cos(\\pi/2)\\sin\\alpha=1\\cdot\\cos\\alpha-0=\\cos\\alpha$.",
+            "$\\sin(\\pi-\\alpha)=\\sin\\pi\\cos\\alpha-\\cos\\pi\\sin\\alpha=0-(-1)\\sin\\alpha=\\sin\\alpha$."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "5-fc-1",
+          "front": "$\\sin(\\pi/2-\\alpha)=$ ?",
+          "back": "$\\cos\\alpha$"
+        },
+        {
+          "id": "5-fc-2",
+          "front": "$\\cos(\\pi/2-\\alpha)=$ ?",
+          "back": "$\\sin\\alpha$"
+        },
+        {
+          "id": "5-fc-3",
+          "front": "$\\sin(\\pi-\\alpha)=$ ?",
+          "back": "$\\sin\\alpha$"
+        },
+        {
+          "id": "5-fc-4",
+          "front": "$\\cos(\\pi-\\alpha)=$ ?",
+          "back": "$-\\cos\\alpha$"
+        },
+        {
+          "id": "5-fc-5",
+          "front": "$\\sin(\\pi+\\alpha)=$ ?",
+          "back": "$-\\sin\\alpha$"
+        },
+        {
+          "id": "5-fc-6",
+          "front": "$\\operatorname{tg}(\\pi-\\alpha)=$ ?",
+          "back": "$-\\operatorname{tg}\\alpha$"
+        },
+        {
+          "id": "5-fc-7",
+          "front": "Когда sin↔cos при приведении?",
+          "back": "При $\\pi/2\\pm\\alpha$ и $3\\pi/2\\pm\\alpha$"
+        },
+        {
+          "id": "5-fc-8",
+          "front": "Правило знака?",
+          "back": "Знак исходной функции в четверти угла"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "5-qz-1",
+          "question": "$\\sin(\\pi/2-\\alpha)=$ ?",
+          "options": [
+            "$\\sin\\alpha$",
+            "$\\cos\\alpha$",
+            "$-\\sin\\alpha$",
+            "$-\\cos\\alpha$"
+          ],
+          "correct": 1,
+          "explain": "Смена имени + знак «+» в I."
+        },
+        {
+          "id": "5-qz-2",
+          "question": "$\\cos(\\pi+\\alpha)=$ ?",
+          "options": [
+            "$\\cos\\alpha$",
+            "$-\\cos\\alpha$",
+            "$\\sin\\alpha$",
+            "$-\\sin\\alpha$"
+          ],
+          "correct": 1,
+          "explain": "Имя то же, II/III → cos отрицателен для $\\alpha$ острого."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "5-cz-1",
+          "text": "$\\sin(\\pi/2-\\alpha)=[[\\cos\\alpha]]$."
+        },
+        {
+          "id": "5-cz-2",
+          "text": "$\\sin(\\pi-\\alpha)=[[\\sin\\alpha]]$."
+        },
+        {
+          "id": "5-cz-3",
+          "text": "При сдвиге на $\\pi/2$ функции [[меняются]] (sin↔cos)."
+        }
+      ],
+      "recall": [
+        "Сформулируй два правила приведения.",
+        "Выведи $\\sin(\\pi-\\alpha)$ через формулу сложения."
+      ],
+      "derive": [
+        {
+          "id": "5-dr-1",
+          "prompt": "Выведи $\\sin(\\pi/2-\\alpha)=\\cos\\alpha$",
+          "formula": "$\\sin(\\pi/2-\\alpha)=\\cos\\alpha$",
+          "steps": [
+            "Формула: $\\sin(a-b)=\\sin a\\cos b-\\cos a\\sin b$.",
+            "Подставь $a=\\pi/2$, $b=\\alpha$.",
+            "$\\sin(\\pi/2)=1$, $\\cos(\\pi/2)=0$ ⇒ $1\\cdot\\cos\\alpha-0=\\cos\\alpha$."
+          ]
+        },
+        {
+          "id": "5-dr-2",
+          "prompt": "Выведи $\\sin(\\pi-\\alpha)=\\sin\\alpha$",
+          "formula": "$\\sin(\\pi-\\alpha)=\\sin\\alpha$",
+          "steps": [
+            "$\\sin(\\pi-\\alpha)=\\sin\\pi\\cos\\alpha-\\cos\\pi\\sin\\alpha$.",
+            "$\\sin\\pi=0$, $\\cos\\pi=-1$.",
+            "Получи $0-(-1)\\sin\\alpha=\\sin\\alpha$."
+          ]
+        }
+      ],
+      "diagrams": [],
+      "mnemonics": []
+    },
+    {
+      "id": "6",
+      "code": "6",
+      "title": "Формулы сложения аргументов",
+      "section": "2. Преобразования",
+      "why": "Материнские формулы: из них двойной угол, сумма↔произведение и т.д.",
+      "bookPages": "лист 2",
+      "conspect": [
+        {
+          "heading": "Формулы",
+          "bullets": [
+            "$\\sin(\\alpha\\pm\\beta)=\\sin\\alpha\\cos\\beta\\pm\\cos\\alpha\\sin\\beta$.",
+            "$\\cos(\\alpha\\pm\\beta)=\\cos\\alpha\\cos\\beta\\mp\\sin\\alpha\\sin\\beta$.",
+            "$\\operatorname{tg}(\\alpha\\pm\\beta)=\\dfrac{\\operatorname{tg}\\alpha\\pm\\operatorname{tg}\\beta}{1\\mp\\operatorname{tg}\\alpha\\operatorname{tg}\\beta}$.",
+            "$\\operatorname{ctg}(\\alpha\\pm\\beta)=\\dfrac{\\operatorname{ctg}\\alpha\\operatorname{ctg}\\beta\\mp 1}{\\operatorname{ctg}\\beta\\pm\\operatorname{ctg}\\alpha}$."
+          ]
+        },
+        {
+          "heading": "Вывод tg из sin/cos",
+          "bullets": [
+            "$\\operatorname{tg}(\\alpha+\\beta)=\\dfrac{\\sin(\\alpha+\\beta)}{\\cos(\\alpha+\\beta)}$.",
+            "Подставь формулы sin/cos, раздели числитель и знаменатель на $\\cos\\alpha\\cos\\beta$.",
+            "Получи $\\dfrac{\\operatorname{tg}\\alpha+\\operatorname{tg}\\beta}{1-\\operatorname{tg}\\alpha\\operatorname{tg}\\beta}$."
+          ]
+        },
+        {
+          "heading": "Идея геометрического вывода sin(α+β)",
+          "bullets": [
+            "Можно через площадь/проекции или через формулу косинуса угла между векторами.",
+            "На ЕГЭ достаточно уметь применять и выводить следствия из сложения."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "6-fc-1",
+          "front": "$\\sin(\\alpha+\\beta)=$ ?",
+          "back": "$\\sin\\alpha\\cos\\beta+\\cos\\alpha\\sin\\beta$"
+        },
+        {
+          "id": "6-fc-2",
+          "front": "$\\cos(\\alpha+\\beta)=$ ?",
+          "back": "$\\cos\\alpha\\cos\\beta-\\sin\\alpha\\sin\\beta$"
+        },
+        {
+          "id": "6-fc-3",
+          "front": "$\\sin(\\alpha-\\beta)=$ ?",
+          "back": "$\\sin\\alpha\\cos\\beta-\\cos\\alpha\\sin\\beta$"
+        },
+        {
+          "id": "6-fc-4",
+          "front": "$\\cos(\\alpha-\\beta)=$ ?",
+          "back": "$\\cos\\alpha\\cos\\beta+\\sin\\alpha\\sin\\beta$"
+        },
+        {
+          "id": "6-fc-5",
+          "front": "$\\operatorname{tg}(\\alpha+\\beta)=$ ?",
+          "back": "$(\\operatorname{tg}\\alpha+\\operatorname{tg}\\beta)/(1-\\operatorname{tg}\\alpha\\operatorname{tg}\\beta)$"
+        },
+        {
+          "id": "6-fc-6",
+          "front": "Знаки в $\\cos(\\alpha\\pm\\beta)$?",
+          "back": "∓ перед произведением синусов"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "6-qz-1",
+          "question": "$\\cos(\\alpha+\\beta)=$ ?",
+          "options": [
+            "$\\cos\\alpha\\cos\\beta+\\sin\\alpha\\sin\\beta$",
+            "$\\cos\\alpha\\cos\\beta-\\sin\\alpha\\sin\\beta$",
+            "$\\sin\\alpha\\cos\\beta+\\cos\\alpha\\sin\\beta$",
+            "$\\sin\\alpha\\sin\\beta-\\cos\\alpha\\cos\\beta$"
+          ],
+          "correct": 1,
+          "explain": "Минус у произведения синусов."
+        },
+        {
+          "id": "6-qz-2",
+          "question": "Знаменатель $\\operatorname{tg}(\\alpha+\\beta)$:",
+          "options": [
+            "$1+\\operatorname{tg}\\alpha\\operatorname{tg}\\beta$",
+            "$1-\\operatorname{tg}\\alpha\\operatorname{tg}\\beta$",
+            "$\\operatorname{tg}\\alpha+\\operatorname{tg}\\beta$",
+            "$\\cos\\alpha\\cos\\beta$"
+          ],
+          "correct": 1,
+          "explain": "1 минус произведение тангенсов."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "6-cz-1",
+          "text": "$\\sin(\\alpha+\\beta)=\\sin\\alpha\\cos\\beta [[+]] \\cos\\alpha\\sin\\beta$."
+        },
+        {
+          "id": "6-cz-2",
+          "text": "$\\cos(\\alpha+\\beta)=\\cos\\alpha\\cos\\beta [[-]] \\sin\\alpha\\sin\\beta$."
+        }
+      ],
+      "recall": [
+        "Напиши все четыре формулы sin/cos сложения по памяти.",
+        "Выведи tg(α+β) из sin/cos."
+      ],
+      "derive": [
+        {
+          "id": "6-dr-1",
+          "prompt": "Выведи $\\operatorname{tg}(\\alpha+\\beta)$ из sin/cos",
+          "formula": "$\\operatorname{tg}(\\alpha+\\beta)=\\dfrac{\\operatorname{tg}\\alpha+\\operatorname{tg}\\beta}{1-\\operatorname{tg}\\alpha\\operatorname{tg}\\beta}$",
+          "steps": [
+            "Запиши $\\operatorname{tg}(\\alpha+\\beta)=\\sin(\\alpha+\\beta)/\\cos(\\alpha+\\beta)$.",
+            "Раскрой числитель и знаменатель формулами сложения.",
+            "Раздели числитель и знаменатель на $\\cos\\alpha\\cos\\beta$.",
+            "Получи $(\\operatorname{tg}\\alpha+\\operatorname{tg}\\beta)/(1-\\operatorname{tg}\\alpha\\operatorname{tg}\\beta)$."
+          ]
+        }
+      ],
+      "diagrams": [],
+      "mnemonics": []
+    },
+    {
+      "id": "7",
+      "code": "7",
+      "title": "Формулы двойного угла",
+      "section": "2. Преобразования",
+      "why": "Частый приём в уравнениях и упрощениях.",
+      "bookPages": "лист 2",
+      "conspect": [
+        {
+          "heading": "Формулы",
+          "bullets": [
+            "$\\sin 2\\alpha=2\\sin\\alpha\\cos\\alpha$.",
+            "$\\cos 2\\alpha=\\cos^2\\alpha-\\sin^2\\alpha=2\\cos^2\\alpha-1=1-2\\sin^2\\alpha$.",
+            "$\\operatorname{tg} 2\\alpha=\\dfrac{2\\operatorname{tg}\\alpha}{1-\\operatorname{tg}^2\\alpha}$.",
+            "$\\operatorname{ctg} 2\\alpha=\\dfrac{\\operatorname{ctg}^2\\alpha-1}{2\\operatorname{ctg}\\alpha}$."
+          ]
+        },
+        {
+          "heading": "Выводы",
+          "bullets": [
+            "$\\sin 2\\alpha=\\sin(\\alpha+\\alpha)=\\sin\\alpha\\cos\\alpha+\\cos\\alpha\\sin\\alpha=2\\sin\\alpha\\cos\\alpha$.",
+            "$\\cos 2\\alpha=\\cos\\alpha\\cos\\alpha-\\sin\\alpha\\sin\\alpha=\\cos^2-\\sin^2$.",
+            "Через $\\cos^2+\\sin^2=1$: $\\cos 2\\alpha=2\\cos^2-1=1-2\\sin^2$.",
+            "tg: подставь $\\beta=\\alpha$ в формулу $\\operatorname{tg}(\\alpha+\\beta)$."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "7-fc-1",
+          "front": "$\\sin 2\\alpha=$ ?",
+          "back": "$2\\sin\\alpha\\cos\\alpha$"
+        },
+        {
+          "id": "7-fc-2",
+          "front": "$\\cos 2\\alpha$ (три вида)?",
+          "back": "$\\cos^2-\\sin^2=2\\cos^2-1=1-2\\sin^2$"
+        },
+        {
+          "id": "7-fc-3",
+          "front": "$\\operatorname{tg} 2\\alpha=$ ?",
+          "back": "$2\\operatorname{tg}\\alpha/(1-\\operatorname{tg}^2\\alpha)$"
+        },
+        {
+          "id": "7-fc-4",
+          "front": "Как получить $\\sin 2\\alpha$?",
+          "back": "Сложение с $\\beta=\\alpha$"
+        },
+        {
+          "id": "7-fc-5",
+          "front": "$\\cos 2\\alpha$ через только sin?",
+          "back": "$1-2\\sin^2\\alpha$"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "7-qz-1",
+          "question": "$\\sin 2\\alpha=$ ?",
+          "options": [
+            "$\\sin^2\\alpha$",
+            "$2\\sin\\alpha\\cos\\alpha$",
+            "$\\cos^2-\\sin^2$",
+            "$2\\operatorname{tg}\\alpha$"
+          ],
+          "correct": 1,
+          "explain": "Двойной синус — произведение."
+        },
+        {
+          "id": "7-qz-2",
+          "question": "$\\cos 2\\alpha=1-2\\sin^2\\alpha$ верно?",
+          "options": [
+            "Да",
+            "Нет",
+            "Только для острых",
+            "Только в радианах"
+          ],
+          "correct": 0,
+          "explain": "Да, следствие основного тождества."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "7-cz-1",
+          "text": "$\\sin 2\\alpha=[[2\\sin\\alpha\\cos\\alpha]]$."
+        },
+        {
+          "id": "7-cz-2",
+          "text": "$\\cos 2\\alpha=[[\\cos^2\\alpha-\\sin^2\\alpha]]$."
+        }
+      ],
+      "recall": [
+        "Выведи все три формы cos 2α.",
+        "Получи tg 2α из tg(α+β)."
+      ],
+      "derive": [
+        {
+          "id": "7-dr-1",
+          "prompt": "Выведи $\\sin 2\\alpha$",
+          "formula": "$\\sin 2\\alpha=2\\sin\\alpha\\cos\\alpha$",
+          "steps": [
+            "Запиши $\\sin(\\alpha+\\alpha)$.",
+            "Раскрой: $\\sin\\alpha\\cos\\alpha+\\cos\\alpha\\sin\\alpha$.",
+            "Сложи: $2\\sin\\alpha\\cos\\alpha$."
+          ]
+        },
+        {
+          "id": "7-dr-2",
+          "prompt": "Выведи $\\cos 2\\alpha=1-2\\sin^2\\alpha$",
+          "formula": "$\\cos 2\\alpha=1-2\\sin^2\\alpha$",
+          "steps": [
+            "Сначала $\\cos 2\\alpha=\\cos^2\\alpha-\\sin^2\\alpha$.",
+            "Замени $\\cos^2=1-\\sin^2$: $(1-\\sin^2)-\\sin^2=1-2\\sin^2$."
+          ]
+        }
+      ],
+      "diagrams": [],
+      "mnemonics": []
+    },
+    {
+      "id": "8",
+      "code": "8",
+      "title": "Формулы понижения степени",
+      "section": "2. Преобразования",
+      "why": "Убирают квадраты — удобно в интегралах и уравнениях.",
+      "bookPages": "лист 2",
+      "conspect": [
+        {
+          "heading": "Формулы",
+          "bullets": [
+            "$\\cos^2\\alpha=\\dfrac{1+\\cos 2\\alpha}{2}$.",
+            "$\\sin^2\\alpha=\\dfrac{1-\\cos 2\\alpha}{2}$.",
+            "$\\operatorname{tg}^2\\alpha=\\dfrac{1-\\cos 2\\alpha}{1+\\cos 2\\alpha}$.",
+            "$\\operatorname{ctg}^2\\alpha=\\dfrac{1+\\cos 2\\alpha}{1-\\cos 2\\alpha}$."
+          ]
+        },
+        {
+          "heading": "Вывод",
+          "bullets": [
+            "Из $\\cos 2\\alpha=2\\cos^2\\alpha-1$ вырази $\\cos^2\\alpha$.",
+            "Из $\\cos 2\\alpha=1-2\\sin^2\\alpha$ вырази $\\sin^2\\alpha$.",
+            "tg² = sin²/cos² = отношение двух предыдущих."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "8-fc-1",
+          "front": "$\\sin^2\\alpha=$ ?",
+          "back": "$(1-\\cos 2\\alpha)/2$"
+        },
+        {
+          "id": "8-fc-2",
+          "front": "$\\cos^2\\alpha=$ ?",
+          "back": "$(1+\\cos 2\\alpha)/2$"
+        },
+        {
+          "id": "8-fc-3",
+          "front": "$\\operatorname{tg}^2\\alpha=$ ?",
+          "back": "$(1-\\cos 2\\alpha)/(1+\\cos 2\\alpha)$"
+        },
+        {
+          "id": "8-fc-4",
+          "front": "Откуда берётся понижение степени?",
+          "back": "Из формул cos 2α"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "8-qz-1",
+          "question": "$\\sin^2\\alpha=$ ?",
+          "options": [
+            "$(1+\\cos 2\\alpha)/2$",
+            "$(1-\\cos 2\\alpha)/2$",
+            "$2\\sin\\alpha\\cos\\alpha$",
+            "$1-\\cos\\alpha$"
+          ],
+          "correct": 1,
+          "explain": "Минус у косинуса двойного угла."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "8-cz-1",
+          "text": "$\\cos^2\\alpha=(1[[+]]\\cos 2\\alpha)/2$."
+        },
+        {
+          "id": "8-cz-2",
+          "text": "$\\sin^2\\alpha=(1[[-]]\\cos 2\\alpha)/2$."
+        }
+      ],
+      "recall": [
+        "Выведи $\\sin^2$ и $\\cos^2$ из двойного угла."
+      ],
+      "derive": [
+        {
+          "id": "8-dr-1",
+          "prompt": "Выведи $\\sin^2\\alpha=(1-\\cos 2\\alpha)/2$",
+          "formula": "$\\sin^2\\alpha=\\dfrac{1-\\cos 2\\alpha}{2}$",
+          "steps": [
+            "Возьми $\\cos 2\\alpha=1-2\\sin^2\\alpha$.",
+            "Перенеси: $2\\sin^2\\alpha=1-\\cos 2\\alpha$.",
+            "Раздели на 2."
+          ]
+        }
+      ],
+      "diagrams": [],
+      "mnemonics": []
+    },
+    {
+      "id": "9",
+      "code": "9",
+      "title": "Формулы тройного угла",
+      "section": "2. Преобразования",
+      "why": "Реже, но встречаются; вывод тренирует сложение.",
+      "bookPages": "лист 2",
+      "conspect": [
+        {
+          "heading": "Формулы",
+          "bullets": [
+            "$\\sin 3\\alpha=3\\sin\\alpha-4\\sin^3\\alpha$.",
+            "$\\cos 3\\alpha=4\\cos^3\\alpha-3\\cos\\alpha$.",
+            "$\\operatorname{tg} 3\\alpha=\\dfrac{3\\operatorname{tg}\\alpha-\\operatorname{tg}^3\\alpha}{1-3\\operatorname{tg}^2\\alpha}$.",
+            "$\\operatorname{ctg} 3\\alpha=\\dfrac{\\operatorname{ctg}^3\\alpha-3\\operatorname{ctg}\\alpha}{3\\operatorname{ctg}^2\\alpha-1}$."
+          ]
+        },
+        {
+          "heading": "Вывод sin 3α",
+          "bullets": [
+            "$\\sin 3\\alpha=\\sin(2\\alpha+\\alpha)=\\sin 2\\alpha\\cos\\alpha+\\cos 2\\alpha\\sin\\alpha$.",
+            "Подставь $\\sin 2\\alpha=2\\sin\\cos$, $\\cos 2\\alpha=1-2\\sin^2$.",
+            "Упрости до $3\\sin\\alpha-4\\sin^3\\alpha$."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "9-fc-1",
+          "front": "$\\sin 3\\alpha=$ ?",
+          "back": "$3\\sin\\alpha-4\\sin^3\\alpha$"
+        },
+        {
+          "id": "9-fc-2",
+          "front": "$\\cos 3\\alpha=$ ?",
+          "back": "$4\\cos^3\\alpha-3\\cos\\alpha$"
+        },
+        {
+          "id": "9-fc-3",
+          "front": "Идея вывода тройного угла?",
+          "back": "$\\sin(2\\alpha+\\alpha)$ / $\\cos(2\\alpha+\\alpha)$"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "9-qz-1",
+          "question": "$\\sin 3\\alpha=$ ?",
+          "options": [
+            "$3\\sin-4\\sin^3$",
+            "$4\\cos^3-3\\cos$",
+            "$2\\sin\\cos$",
+            "$3\\operatorname{tg}-\\operatorname{tg}^3$"
+          ],
+          "correct": 0,
+          "explain": "Классическая форма через sin."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "9-cz-1",
+          "text": "$\\sin 3\\alpha=3\\sin\\alpha-[[4\\sin^3\\alpha]]$."
+        },
+        {
+          "id": "9-cz-2",
+          "text": "$\\cos 3\\alpha=[[4\\cos^3\\alpha]]-3\\cos\\alpha$."
+        }
+      ],
+      "recall": [
+        "Выведи sin 3α из двойного + сложения."
+      ],
+      "derive": [
+        {
+          "id": "9-dr-1",
+          "prompt": "Выведи $\\sin 3\\alpha$",
+          "formula": "$\\sin 3\\alpha=3\\sin\\alpha-4\\sin^3\\alpha$",
+          "steps": [
+            "Запиши $\\sin(2\\alpha+\\alpha)=\\sin 2\\alpha\\cos\\alpha+\\cos 2\\alpha\\sin\\alpha$.",
+            "Подставь $2\\sin\\cos$ и $1-2\\sin^2$.",
+            "Раскрой: $2\\sin\\cos^2+\\sin-2\\sin^3$.",
+            "Замени $\\cos^2=1-\\sin^2$: $2\\sin(1-\\sin^2)+\\sin-2\\sin^3=3\\sin-4\\sin^3$."
+          ]
+        }
+      ],
+      "diagrams": [],
+      "mnemonics": []
+    },
+    {
+      "id": "10",
+      "code": "10",
+      "title": "Сумма → произведение",
+      "section": "3. Суммы и произведения",
+      "why": "Упрощают уравнения вида sin A ± sin B = 0.",
+      "bookPages": "лист 3",
+      "diagrams": [
+        "sheet-3"
+      ],
+      "conspect": [
+        {
+          "heading": "Формулы",
+          "bullets": [
+            "$\\sin\\alpha\\pm\\sin\\beta=2\\sin\\dfrac{\\alpha\\pm\\beta}{2}\\cos\\dfrac{\\alpha\\mp\\beta}{2}$.",
+            "$\\cos\\alpha+\\cos\\beta=2\\cos\\dfrac{\\alpha+\\beta}{2}\\cos\\dfrac{\\alpha-\\beta}{2}$.",
+            "$\\cos\\alpha-\\cos\\beta=-2\\sin\\dfrac{\\alpha+\\beta}{2}\\sin\\dfrac{\\alpha-\\beta}{2}$.",
+            "$\\operatorname{tg}\\alpha\\pm\\operatorname{tg}\\beta=\\dfrac{\\sin(\\alpha\\pm\\beta)}{\\cos\\alpha\\cos\\beta}$.",
+            "$\\operatorname{ctg}\\alpha\\pm\\operatorname{ctg}\\beta=\\dfrac{\\sin(\\beta\\pm\\alpha)}{\\sin\\alpha\\sin\\beta}$."
+          ]
+        },
+        {
+          "heading": "Вывод (схема)",
+          "bullets": [
+            "Обозначь $s=(\\alpha+\\beta)/2$, $d=(\\alpha-\\beta)/2$, тогда $\\alpha=s+d$, $\\beta=s-d$.",
+            "$\\sin\\alpha+\\sin\\beta=\\sin(s+d)+\\sin(s-d)=2\\sin s\\cos d$.",
+            "Аналогично для остальных через формулы сложения."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "10-fc-1",
+          "front": "$\\sin\\alpha+\\sin\\beta=$ ?",
+          "back": "$2\\sin\\frac{\\alpha+\\beta}{2}\\cos\\frac{\\alpha-\\beta}{2}$"
+        },
+        {
+          "id": "10-fc-2",
+          "front": "$\\sin\\alpha-\\sin\\beta=$ ?",
+          "back": "$2\\sin\\frac{\\alpha-\\beta}{2}\\cos\\frac{\\alpha+\\beta}{2}$"
+        },
+        {
+          "id": "10-fc-3",
+          "front": "$\\cos\\alpha+\\cos\\beta=$ ?",
+          "back": "$2\\cos\\frac{\\alpha+\\beta}{2}\\cos\\frac{\\alpha-\\beta}{2}$"
+        },
+        {
+          "id": "10-fc-4",
+          "front": "$\\cos\\alpha-\\cos\\beta=$ ?",
+          "back": "$-2\\sin\\frac{\\alpha+\\beta}{2}\\sin\\frac{\\alpha-\\beta}{2}$"
+        },
+        {
+          "id": "10-fc-5",
+          "front": "Ключ вывода сумма→произведение?",
+          "back": "Замена $s=(\\alpha+\\beta)/2$, $d=(\\alpha-\\beta)/2$"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "10-qz-1",
+          "question": "$\\cos\\alpha-\\cos\\beta=$ ?",
+          "options": [
+            "$2\\sin\\ldots$",
+            "$-2\\sin\\frac{\\alpha+\\beta}{2}\\sin\\frac{\\alpha-\\beta}{2}$",
+            "$2\\cos\\ldots$",
+            "$\\sin(\\alpha-\\beta)$"
+          ],
+          "correct": 1,
+          "explain": "Минус и два синуса."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "10-cz-1",
+          "text": "$\\sin\\alpha+\\sin\\beta=2\\sin\\frac{\\alpha+\\beta}{2}\\cos\\frac{\\alpha-\\beta}{2}$ — верно? Напиши ключевое слово [[верно]]."
+        },
+        {
+          "id": "10-cz-2",
+          "text": "В $\\cos\\alpha-\\cos\\beta$ стоит множитель [[-2]]."
+        }
+      ],
+      "recall": [
+        "Выведи sinα+sinβ через подстановку s,d.",
+        "Чем отличается cosα−cosβ от cosα+cosβ?"
+      ],
+      "derive": [
+        {
+          "id": "10-dr-1",
+          "prompt": "Выведи $\\sin\\alpha+\\sin\\beta$",
+          "formula": "$\\sin\\alpha+\\sin\\beta=2\\sin\\dfrac{\\alpha+\\beta}{2}\\cos\\dfrac{\\alpha-\\beta}{2}$",
+          "steps": [
+            "Пусть $s=(\\alpha+\\beta)/2$, $d=(\\alpha-\\beta)/2$.",
+            "Тогда $\\alpha=s+d$, $\\beta=s-d$.",
+            "$\\sin(s+d)+\\sin(s-d)=(\\sin s\\cos d+\\cos s\\sin d)+(\\sin s\\cos d-\\cos s\\sin d)$.",
+            "Сокращение: $2\\sin s\\cos d$."
+          ]
+        }
+      ],
+      "mnemonics": []
+    },
+    {
+      "id": "11",
+      "code": "11",
+      "title": "Произведение → сумма",
+      "section": "3. Суммы и произведения",
+      "why": "Обратное преобразование; тоже из сложения.",
+      "bookPages": "лист 3",
+      "conspect": [
+        {
+          "heading": "Формулы",
+          "bullets": [
+            "$\\sin\\alpha\\sin\\beta=\\dfrac{1}{2}(\\cos(\\alpha-\\beta)-\\cos(\\alpha+\\beta))$.",
+            "$\\cos\\alpha\\cos\\beta=\\dfrac{1}{2}(\\cos(\\alpha-\\beta)+\\cos(\\alpha+\\beta))$.",
+            "$\\sin\\alpha\\cos\\beta=\\dfrac{1}{2}(\\sin(\\alpha-\\beta)+\\sin(\\alpha+\\beta))$."
+          ]
+        },
+        {
+          "heading": "Вывод",
+          "bullets": [
+            "Сложи/вычти формулы $\\cos(a\\pm b)$: получи произведения cos и sin.",
+            "Например $\\cos(a-b)-\\cos(a+b)=2\\sin a\\sin b$ ⇒ раздели на 2."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "11-fc-1",
+          "front": "$\\sin\\alpha\\sin\\beta=$ ?",
+          "back": "$\\frac12(\\cos(\\alpha-\\beta)-\\cos(\\alpha+\\beta))$"
+        },
+        {
+          "id": "11-fc-2",
+          "front": "$\\cos\\alpha\\cos\\beta=$ ?",
+          "back": "$\\frac12(\\cos(\\alpha-\\beta)+\\cos(\\alpha+\\beta))$"
+        },
+        {
+          "id": "11-fc-3",
+          "front": "$\\sin\\alpha\\cos\\beta=$ ?",
+          "back": "$\\frac12(\\sin(\\alpha+\\beta)+\\sin(\\alpha-\\beta))$"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "11-qz-1",
+          "question": "В $\\sin\\alpha\\sin\\beta$ стоит:",
+          "options": [
+            "сумма косинусов",
+            "разность косинусов",
+            "сумма синусов",
+            "разность синусов"
+          ],
+          "correct": 1,
+          "explain": "cos(α−β) − cos(α+β)."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "11-cz-1",
+          "text": "$\\sin\\alpha\\sin\\beta=\\frac12(\\cos(\\alpha-\\beta)[[-]]\\cos(\\alpha+\\beta))$."
+        }
+      ],
+      "recall": [
+        "Выведи sinα sinβ из разности косинусов."
+      ],
+      "derive": [
+        {
+          "id": "11-dr-1",
+          "prompt": "Выведи $\\sin\\alpha\\sin\\beta$",
+          "formula": "$\\sin\\alpha\\sin\\beta=\\dfrac{\\cos(\\alpha-\\beta)-\\cos(\\alpha+\\beta)}{2}$",
+          "steps": [
+            "Запиши $\\cos(\\alpha-\\beta)=\\cos\\alpha\\cos\\beta+\\sin\\alpha\\sin\\beta$.",
+            "Запиши $\\cos(\\alpha+\\beta)=\\cos\\alpha\\cos\\beta-\\sin\\alpha\\sin\\beta$.",
+            "Вычти второе из первого: $2\\sin\\alpha\\sin\\beta$.",
+            "Раздели на 2."
+          ]
+        }
+      ],
+      "diagrams": [],
+      "mnemonics": []
+    },
+    {
+      "id": "12",
+      "code": "12",
+      "title": "Универсальная подстановка",
+      "section": "3. Суммы и произведения",
+      "why": "Переводит тригонометрию в рациональные дроби от $t=\\operatorname{tg}(\\alpha/2)$.",
+      "bookPages": "лист 3",
+      "conspect": [
+        {
+          "heading": "Формулы ($t=\\operatorname{tg}\\frac{\\alpha}{2}$)",
+          "bullets": [
+            "$\\sin\\alpha=\\dfrac{2t}{1+t^2}$.",
+            "$\\cos\\alpha=\\dfrac{1-t^2}{1+t^2}$.",
+            "$\\operatorname{tg}\\alpha=\\dfrac{2t}{1-t^2}$.",
+            "$\\operatorname{ctg}\\alpha=\\dfrac{1-t^2}{2t}$."
+          ]
+        },
+        {
+          "heading": "Вывод",
+          "bullets": [
+            "$\\sin\\alpha=2\\sin(\\alpha/2)\\cos(\\alpha/2)$; раздели числитель и знаменатель на $\\cos^2(\\alpha/2)$.",
+            "Числитель → $2t$, знаменатель → $1+t^2$ (т.к. $1+\\operatorname{tg}^2=1/\\cos^2$).",
+            "Аналогично для cos: $\\cos^2-\\sin^2$ после деления на $\\cos^2$ даёт $(1-t^2)/(1+t^2)$."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "12-fc-1",
+          "front": "$\\sin\\alpha$ через $t=\\operatorname{tg}(\\alpha/2)$?",
+          "back": "$2t/(1+t^2)$"
+        },
+        {
+          "id": "12-fc-2",
+          "front": "$\\cos\\alpha$ через $t$?",
+          "back": "$(1-t^2)/(1+t^2)$"
+        },
+        {
+          "id": "12-fc-3",
+          "front": "$\\operatorname{tg}\\alpha$ через $t$?",
+          "back": "$2t/(1-t^2)$"
+        },
+        {
+          "id": "12-fc-4",
+          "front": "Что такое универсальная подстановка?",
+          "back": "$t=\\operatorname{tg}(\\alpha/2)$"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "12-qz-1",
+          "question": "$\\sin\\alpha$ при $t=\\operatorname{tg}(\\alpha/2)$:",
+          "options": [
+            "$(1-t^2)/(1+t^2)$",
+            "$2t/(1+t^2)$",
+            "$2t/(1-t^2)$",
+            "$t$"
+          ],
+          "correct": 1,
+          "explain": "Классическая формула Вейерштрасса."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "12-cz-1",
+          "text": "$\\sin\\alpha=[[2t]]/(1+t^2)$, где $t=\\operatorname{tg}(\\alpha/2)$."
+        },
+        {
+          "id": "12-cz-2",
+          "text": "$\\cos\\alpha=(1-t^2)/[[1+t^2]]$."
+        }
+      ],
+      "recall": [
+        "Выведи sin и cos через t=tg(α/2)."
+      ],
+      "derive": [
+        {
+          "id": "12-dr-1",
+          "prompt": "Выведи $\\sin\\alpha=2t/(1+t^2)$",
+          "formula": "$\\sin\\alpha=\\dfrac{2t}{1+t^2},\\ t=\\operatorname{tg}\\frac{\\alpha}{2}$",
+          "steps": [
+            "Запиши $\\sin\\alpha=2\\sin(\\alpha/2)\\cos(\\alpha/2)$.",
+            "Раздели числитель и знаменатель на $\\cos^2(\\alpha/2)$.",
+            "Числитель: $2\\operatorname{tg}(\\alpha/2)=2t$.",
+            "Знаменатель: $1+\\operatorname{tg}^2(\\alpha/2)=1+t^2$."
+          ]
+        }
+      ],
+      "diagrams": [],
+      "mnemonics": []
+    },
+    {
+      "id": "13",
+      "code": "13",
+      "title": "Вспомогательный аргумент",
+      "section": "4. Уравнения и обратные",
+      "why": "Сводит $a\\sin x+b\\cos x$ к одному синусу/косинусу.",
+      "bookPages": "лист 3",
+      "conspect": [
+        {
+          "heading": "Формулы",
+          "bullets": [
+            "$a\\sin x\\pm b\\cos x=\\sqrt{a^2+b^2}\\,\\sin\\big(x\\pm\\arcsin\\frac{b}{\\sqrt{a^2+b^2}}\\big)$.",
+            "$a\\sin x\\pm b\\cos x=\\pm\\sqrt{a^2+b^2}\\,\\cos\\big(x\\mp\\arccos\\frac{b}{\\sqrt{a^2+b^2}}\\big)$."
+          ]
+        },
+        {
+          "heading": "Вывод идеи",
+          "bullets": [
+            "Вынеси $\\sqrt{a^2+b^2}$: $\\sqrt{a^2+b^2}\\big(\\frac{a}{R}\\sin x\\pm\\frac{b}{R}\\cos x\\big)$, $R=\\sqrt{a^2+b^2}$.",
+            "Найди угол $\\varphi$: $\\cos\\varphi=a/R$, $\\sin\\varphi=b/R$ (или наоборот).",
+            "Тогда скобка = $\\sin(x\\pm\\varphi)$ или $\\cos(x\\mp\\varphi)$."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "13-fc-1",
+          "front": "Амплитуда $a\\sin x+b\\cos x$?",
+          "back": "$\\sqrt{a^2+b^2}$"
+        },
+        {
+          "id": "13-fc-2",
+          "front": "Идея метода?",
+          "back": "Вынести $\\sqrt{a^2+b^2}$ и ввести угол $\\varphi$"
+        },
+        {
+          "id": "13-fc-3",
+          "front": "Зачем вспомогательный аргумент?",
+          "back": "Свести к одному sin или cos"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "13-qz-1",
+          "question": "Коэффициент перед sin/cos после свёртки:",
+          "options": [
+            "$a+b$",
+            "$\\sqrt{a^2+b^2}$",
+            "$ab$",
+            "$a/b$"
+          ],
+          "correct": 1,
+          "explain": "Норма вектора (a,b)."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "13-cz-1",
+          "text": "$a\\sin x+b\\cos x$ имеет амплитуду $[[\\sqrt{a^2+b^2}]]$."
+        }
+      ],
+      "recall": [
+        "Объясни метод вспомогательного аргумента на примере 3sin x + 4 cos x."
+      ],
+      "derive": [
+        {
+          "id": "13-dr-1",
+          "prompt": "Сверни $a\\sin x+b\\cos x$",
+          "formula": "$a\\sin x+b\\cos x=R\\sin(x+\\varphi)$, $R=\\sqrt{a^2+b^2}$",
+          "steps": [
+            "Вынеси $R=\\sqrt{a^2+b^2}$.",
+            "Получи $R\\big((a/R)\\sin x+(b/R)\\cos x\\big)$.",
+            "Выбери $\\varphi$: $\\cos\\varphi=a/R$, $\\sin\\varphi=b/R$.",
+            "Скобка = $\\sin x\\cos\\varphi+\\cos x\\sin\\varphi=\\sin(x+\\varphi)$."
+          ]
+        }
+      ],
+      "diagrams": [],
+      "mnemonics": []
+    },
+    {
+      "id": "14",
+      "code": "14",
+      "title": "Обратные тригонометрические функции",
+      "section": "4. Уравнения и обратные",
+      "why": "Без областей значений нельзя писать общий вид уравнений.",
+      "bookPages": "лист 3",
+      "conspect": [
+        {
+          "heading": "Определения и области значений",
+          "bullets": [
+            "$\\arcsin a\\in[-\\pi/2;\\pi/2]$, $\\arcsin(-a)=-\\arcsin a$.",
+            "$\\arccos a\\in[0;\\pi]$, $\\arccos(-a)=\\pi-\\arccos a$.",
+            "$\\operatorname{arctg} a\\in(-\\pi/2;\\pi/2)$, нечётная.",
+            "$\\operatorname{arcctg} a\\in(0;\\pi)$, $\\operatorname{arcctg}(-a)=\\pi-\\operatorname{arcctg} a$."
+          ]
+        },
+        {
+          "heading": "Смысл",
+          "bullets": [
+            "Если $\\sin x=a$, то одно из решений $x=\\arcsin a$ (главное значение).",
+            "Остальные решения — через периодичность и симметрию."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "14-fc-1",
+          "front": "Область значений arcsin?",
+          "back": "$[-\\pi/2;\\pi/2]$"
+        },
+        {
+          "id": "14-fc-2",
+          "front": "Область значений arccos?",
+          "back": "$[0;\\pi]$"
+        },
+        {
+          "id": "14-fc-3",
+          "front": "Область значений arctg?",
+          "back": "$(-\\pi/2;\\pi/2)$"
+        },
+        {
+          "id": "14-fc-4",
+          "front": "Область значений arcctg?",
+          "back": "$(0;\\pi)$"
+        },
+        {
+          "id": "14-fc-5",
+          "front": "$\\arcsin(-a)=$ ?",
+          "back": "$-\\arcsin a$"
+        },
+        {
+          "id": "14-fc-6",
+          "front": "$\\arccos(-a)=$ ?",
+          "back": "$\\pi-\\arccos a$"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "14-qz-1",
+          "question": "$\\arccos(-a)=$ ?",
+          "options": [
+            "$-\\arccos a$",
+            "$\\pi-\\arccos a$",
+            "$\\arcsin a$",
+            "$\\pi/2$"
+          ],
+          "correct": 1,
+          "explain": "Стандартное тождество."
+        },
+        {
+          "id": "14-qz-2",
+          "question": "arctg принимает значения:",
+          "options": [
+            "$[0;\\pi]$",
+            "$(-\\pi/2;\\pi/2)$",
+            "$[-\\pi/2;\\pi/2]$",
+            "$\\mathbb{R}$"
+          ],
+          "correct": 1,
+          "explain": "Открытый интервал."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "14-cz-1",
+          "text": "Область значений arcsin — от $-\\pi/2$ до $\\pi/2$. Ключ: [[arcsin]]."
+        },
+        {
+          "id": "14-cz-2",
+          "text": "$\\arccos(-a)=[[\\pi-\\arccos a]]$."
+        }
+      ],
+      "recall": [
+        "Перечисли области значений всех четырёх обратных функций.",
+        "Почему arcsin нечётный, а arccos — нет?"
+      ],
+      "derive": [],
+      "diagrams": [],
+      "mnemonics": []
+    },
+    {
+      "id": "15",
+      "code": "15",
+      "title": "Общий вид тригонометрических уравнений",
+      "section": "4. Уравнения и обратные",
+      "why": "Финал: связать формулы с решением уравнений.",
+      "bookPages": "лист 3",
+      "conspect": [
+        {
+          "heading": "Формулы",
+          "bullets": [
+            "$\\sin x=a$ ⇒ $x=(-1)^k\\arcsin a+\\pi k$, $k\\in\\mathbb{Z}$.",
+            "$\\cos x=a$ ⇒ $x=\\pm\\arccos a+2\\pi k$.",
+            "$\\operatorname{tg} x=a$ ⇒ $x=\\operatorname{arctg} a+\\pi k$.",
+            "$\\operatorname{ctg} x=a$ ⇒ $x=\\operatorname{arcctg} a+\\pi k$."
+          ]
+        },
+        {
+          "heading": "Откуда берётся серия для sin",
+          "bullets": [
+            "На окружности два угла с данным синусом: $\\arcsin a$ и $\\pi-\\arcsin a$.",
+            "Плюс период $2\\pi$. Объединение даёт компактную запись с $(-1)^k$."
+          ]
+        },
+        {
+          "heading": "Для cos",
+          "bullets": [
+            "Два угла: $\\pm\\arccos a$, плюс период $2\\pi$."
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "15-fc-1",
+          "front": "Общий вид $\\sin x=a$?",
+          "back": "$x=(-1)^k\\arcsin a+\\pi k$"
+        },
+        {
+          "id": "15-fc-2",
+          "front": "Общий вид $\\cos x=a$?",
+          "back": "$x=\\pm\\arccos a+2\\pi k$"
+        },
+        {
+          "id": "15-fc-3",
+          "front": "Общий вид $\\operatorname{tg} x=a$?",
+          "back": "$x=\\operatorname{arctg} a+\\pi k$"
+        },
+        {
+          "id": "15-fc-4",
+          "front": "Общий вид $\\operatorname{ctg} x=a$?",
+          "back": "$x=\\operatorname{arcctg} a+\\pi k$"
+        },
+        {
+          "id": "15-fc-5",
+          "front": "Почему у sin множитель $(-1)^k$?",
+          "back": "Чередует arcsin и π−arcsin"
+        }
+      ],
+      "quiz": [
+        {
+          "id": "15-qz-1",
+          "question": "Решение $\\sin x=a$:",
+          "options": [
+            "$\\pm\\arcsin a+2\\pi k$",
+            "$(-1)^k\\arcsin a+\\pi k$",
+            "$\\arcsin a+\\pi k$",
+            "$\\arccos a+2\\pi k$"
+          ],
+          "correct": 1,
+          "explain": "Классическая серия."
+        },
+        {
+          "id": "15-qz-2",
+          "question": "Период серии для tg:",
+          "options": [
+            "$2\\pi$",
+            "$\\pi$",
+            "$\\pi/2$",
+            "$4\\pi$"
+          ],
+          "correct": 1,
+          "explain": "Как период тангенса."
+        }
+      ],
+      "cloze": [
+        {
+          "id": "15-cz-1",
+          "text": "$\\sin x=a$ ⇒ $x=(-1)^k\\arcsin a+[[\\pi k]]$."
+        },
+        {
+          "id": "15-cz-2",
+          "text": "$\\cos x=a$ ⇒ $x=\\pm\\arccos a+[[2\\pi k]]$."
+        }
+      ],
+      "recall": [
+        "Выведи общий вид sin x = a из двух углов на окружности.",
+        "Чем отличается серия cos от sin?"
+      ],
+      "derive": [
+        {
+          "id": "15-dr-1",
+          "prompt": "Выведи общий вид $\\sin x=a$",
+          "formula": "$x=(-1)^k\\arcsin a+\\pi k$",
+          "steps": [
+            "Пусть $\\alpha=\\arcsin a$. Тогда $\\sin\\alpha=a$ и $\\sin(\\pi-\\alpha)=a$.",
+            "Все углы: $x=\\alpha+2\\pi n$ или $x=\\pi-\\alpha+2\\pi n$.",
+            "Эти две серии объединяются в $x=(-1)^k\\alpha+\\pi k$."
+          ]
+        }
+      ],
+      "diagrams": [],
+      "mnemonics": []
+    }
+  ]
+}
