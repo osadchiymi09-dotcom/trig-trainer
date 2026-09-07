@@ -9,10 +9,12 @@ type Phase = 'see' | 'order' | 'blank' | 'check'
 export function LessonPlayer({
   lesson,
   onComplete,
+  onSkip,
   onBack,
 }: {
   lesson: Lesson
   onComplete: () => void
+  onSkip: () => void
   onBack: () => void
 }) {
   const [phase, setPhase] = useState<Phase>('see')
@@ -88,9 +90,14 @@ export function LessonPlayer({
 
   return (
     <div className="lesson">
-      <button type="button" className="back" onClick={onBack}>
-        ← К пути
-      </button>
+      <div className="lesson-top">
+        <button type="button" className="back" onClick={onBack}>
+          ← К пути
+        </button>
+        <button type="button" className="btn ghost skip" onClick={onSkip}>
+          Пропустить →
+        </button>
+      </div>
 
       <p className="chapter">{lesson.chapter}</p>
       <h1>{lesson.title}</h1>

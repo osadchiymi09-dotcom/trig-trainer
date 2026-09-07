@@ -31,6 +31,13 @@ export default function App() {
         <LessonPlayer
           lesson={current}
           onBack={() => setLessonId(null)}
+          onSkip={() => {
+            setProgress((p) => markDone(current.id, p))
+            const idx = lessons.findIndex((l) => l.id === current.id)
+            const next = lessons[idx + 1]
+            if (next) setLessonId(next.id)
+            else setLessonId(null)
+          }}
           onComplete={() => {
             setProgress((p) => markDone(current.id, p))
             const idx = lessons.findIndex((l) => l.id === current.id)
