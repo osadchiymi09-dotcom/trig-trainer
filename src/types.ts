@@ -1,10 +1,17 @@
 export type Formula = {
   id: string
-  section: string
+  family: string
   title: string
   formula: string
   steps: string[]
+  mother: boolean
+  fromIds: string[]
   tip?: string
+}
+
+export type ContentFile = {
+  familyOrder: string[]
+  formulas: Formula[]
 }
 
 export type CardState = {
@@ -15,13 +22,10 @@ export type CardState = {
   lapses: number
 }
 
-/** Progress keyed by formula id */
 export type ProgressState = {
   cards: Record<string, CardState>
-  /** formula ids marked as known */
-  mastered: string[]
+  known: string[]
+  derived: string[]
   streak: number
   lastStudyDay: string
-  /** optional: how many times derivation was completed */
-  deriveDone: Record<string, number>
 }

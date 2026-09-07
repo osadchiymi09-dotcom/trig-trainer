@@ -1,231 +1,246 @@
 import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { MathText } from './MathText'
 import type { Formula } from '../types'
 import { shuffle } from '../lib/session'
 
-/** Card: show name → recall formula; or show formula → recall derivation idea */
-export function FormulaDrill({
-  items,
-  onGrade,
-}: {
-  items: Formula[]
-  onGrade: (id: string, grade: 0 | 1 | 2 | 3) => void
-}) {
-  const [deck, setDeck] = useState(() => shuffle(items))
-  const [i, setI] = useState(0)
-  const [side, setSide] = useState<'ask' | 'answer'>('ask')
-  const [mode, setMode] = useState<'formula' | 'steps'>('formula')
-
-  useEffect(() => {
-    setDeck(shuffle(items))
-    setI(0)
-    setSide('ask')
-  }, [items])
-
-  const f = deck[i]
-  if (!f) return <p>Нет формул для тренировки.</p>
-
-  const next = (grade: 0 | 1 | 2 | 3) => {
-    onGrade(f.id, grade)
-    setSide('ask')
-    setI((x) => (x + 1) % deck.length)
-  }
-
-  return (
-    <div className="mode drill">
-      <div className="drill-toolbar">
-        <button
-          type="button"
-          className={mode === 'formula' ? 'chip active' : 'chip'}
-          onClick={() => {
-            setMode('formula')
-            setSide('ask')
-          }}
-        >
-          Запомнить формулу
-        </button>
-        <button
-          type="button"
-          className={mode === 'steps' ? 'chip active' : 'chip'}
-          onClick={() => {
-            setMode('steps')
-            setSide('ask')
-          }}
-        >
-          Вспомнить вывод
-        </button>
-        <button
-          type="button"
-          className="linkish"
-          onClick={() => {
-            setDeck(shuffle(items))
-            setI(0)
-            setSide('ask')
-          }}
-        >
-          Перемешать
-        </button>
-      </div>
-
-      <p className="meta">
-        {i + 1} / {deck.length} · {f.section}
-      </p>
-      <h2 className="drill-title">{f.title}</h2>
-
-      {mode === 'formula' ? (
-        side === 'ask' ? (
-          <p className="lede">Напиши / скажи формулу по памяти, потом открой.</p>
-        ) : (
-          <div className="formula-box">
-            <MathText text={f.formula} />
-          </div>
-        )
-      ) : side === 'ask' ? (
-        <>
-          <div className="formula-box dim">
-            <MathText text={f.formula} />
-          </div>
-          <p className="lede">Вслух: из чего это выводится? Какие шаги?</p>
-        </>
-      ) : (
-        <ol className="derive-steps">
-          {f.steps.map((s, idx) => (
-            <li key={idx}>
-              <MathText text={s} />
-            </li>
-          ))}
-        </ol>
-      )}
-
-      {side === 'ask' ? (
-        <button type="button" className="btn" onClick={() => setSide('answer')}>
-          Показать ответ
-        </button>
-      ) : (
-        <div className="grade-row">
-          <button type="button" className="grade bad" onClick={() => next(0)}>
-            Не знал
-          </button>
-          <button type="button" className="grade mid" onClick={() => next(2)}>
-            С трудом
-          </button>
-          <button type="button" className="grade good" onClick={() => next(3)}>
-            Знал
-          </button>
-        </div>
-      )}
-    </div>
-  )
-}
-
-/** Step-by-step: open derivation one line at a time, then mark done */
-export function DeriveWalkthrough({
+export function FormulaSheet({
   formula,
-  onDone,
+  parents,
+  onClose,
+  onDerive,
+  onToggleKnown,
+  known,
+  derived,
 }: {
   formula: Formula
-  onDone: () => void
+  parents: Formula[]
+  onClose: () => void
+  onDerive: () => void
+  onToggleKnown: () => void
+  known: boolean
+  derived: boolean
 }) {
-  const [step, setStep] = useState(0)
-
-  useEffect(() => {
-    setStep(0)
-  }, [formula.id])
-
-  const done = step >= formula.steps.length
-
   return (
-    <div className="mode derive">
-      <h2 className="drill-title">{formula.title}</h2>
-      <div className="formula-box">
+    <motion.div
+      className="sheet"
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 16 }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <button type="button" className="ghost" onClick={onClose}>
+        ← Назад
+      </button>
+      <p className="eyebrow">
+        {formula.mother ? 'Материнская' : formula.family}
+        {derived ? ' · вывод разобран' : ''}
+      </p>
+      <h1>{formula.title}</h1>
+      <div className="big-formula">
         <MathText text={formula.formula} />
       </div>
-      <p className="hint">Сначала попробуй вывести сам — потом открывай шаги.</p>
-      <ol className="derive-steps">
-        {formula.steps.slice(0, step).map((s, idx) => (
-          <li key={idx}>
+      {formula.tip && <p className="muted">{formula.tip}</p>}
+
+      {parents.length > 0 && (
+        <div className="from-row">
+          <span>Выводится из</span>
+          {parents.map((p) => (
+            <span key={p.id} className="pill">
+              {p.title}
+            </span>
+          ))}
+        </div>
+      )}
+
+      <div className="sheet-actions">
+        <button type="button" className="btn primary" onClick={onDerive}>
+          Разобрать вывод
+        </button>
+        <button type="button" className={known ? 'btn known' : 'btn'} onClick={onToggleKnown}>
+          {known ? 'Знаю ✓' : 'Отметить «знаю»'}
+        </button>
+      </div>
+
+      <h2 className="subhead">Вывод целиком</h2>
+      <ol className="steps">
+        {formula.steps.map((s, i) => (
+          <li key={i}>
             <MathText text={s} />
           </li>
         ))}
       </ol>
-      {!done ? (
-        <button type="button" className="btn" onClick={() => setStep((s) => s + 1)}>
-          Шаг {step + 1} / {formula.steps.length}
+    </motion.div>
+  )
+}
+
+export function DeriveFlow({
+  formula,
+  onDone,
+  onBack,
+}: {
+  formula: Formula
+  onDone: () => void
+  onBack: () => void
+}) {
+  const [step, setStep] = useState(0)
+  useEffect(() => setStep(0), [formula.id])
+  const finished = step >= formula.steps.length
+
+  return (
+    <div className="sheet">
+      <button type="button" className="ghost" onClick={onBack}>
+        ← К формуле
+      </button>
+      <p className="eyebrow">Вывод по шагам</p>
+      <h1>{formula.title}</h1>
+      <div className="big-formula soft">
+        <MathText text={formula.formula} />
+      </div>
+      <p className="muted">Сначала попробуй сам — потом открывай шаг.</p>
+
+      <ol className="steps">
+        <AnimatePresence initial={false}>
+          {formula.steps.slice(0, step).map((s, i) => (
+            <motion.li
+              key={i}
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.28 }}
+            >
+              <MathText text={s} />
+            </motion.li>
+          ))}
+        </AnimatePresence>
+      </ol>
+
+      {!finished ? (
+        <button type="button" className="btn primary" onClick={() => setStep((s) => s + 1)}>
+          Шаг {step + 1} из {formula.steps.length}
         </button>
       ) : (
-        <button
-          type="button"
-          className="btn"
-          onClick={() => {
-            onDone()
-            setStep(0)
-          }}
-        >
-          Вывод разобрал — дальше
+        <button type="button" className="btn primary" onClick={onDone}>
+          Вывод понял
         </button>
       )}
     </div>
   )
 }
 
-export function FormulaPage({
-  formula,
-  known,
-  derivedCount,
-  onToggleKnown,
-  onStudyDerive,
-  onBack,
+export function Drill({
+  pool,
+  onGrade,
+  onExit,
 }: {
-  formula: Formula
-  known: boolean
-  derivedCount: number
-  onToggleKnown: () => void
-  onStudyDerive: () => void
-  onBack: () => void
+  pool: Formula[]
+  onGrade: (id: string, ok: boolean) => void
+  onExit: () => void
 }) {
-  const [openSteps, setOpenSteps] = useState(true)
+  const [deck, setDeck] = useState(() => shuffle(pool))
+  const [i, setI] = useState(0)
+  const [mode, setMode] = useState<'formula' | 'proof'>('formula')
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    setDeck(shuffle(pool))
+    setI(0)
+    setShow(false)
+  }, [pool])
+
+  const f = deck[i]
+  if (!f) {
+    return (
+      <div className="sheet">
+        <p>Нечего тренировать.</p>
+        <button type="button" className="btn" onClick={onExit}>
+          Назад
+        </button>
+      </div>
+    )
+  }
+
+  const advance = (ok: boolean) => {
+    onGrade(f.id, ok)
+    setShow(false)
+    setI((x) => (x + 1) % deck.length)
+  }
 
   return (
-    <div className="mode formula-page">
-      <button type="button" className="back" onClick={onBack}>
-        ← К списку
-      </button>
-      <p className="meta">{formula.section}</p>
-      <h1>{formula.title}</h1>
-      <div className="formula-box hero-formula">
-        <MathText text={formula.formula} />
+    <div className="sheet">
+      <div className="drill-top">
+        <button type="button" className="ghost" onClick={onExit}>
+          ← Выйти
+        </button>
+        <div className="mode-switch">
+          <button
+            type="button"
+            className={mode === 'formula' ? 'pill on' : 'pill'}
+            onClick={() => {
+              setMode('formula')
+              setShow(false)
+            }}
+          >
+            Формула
+          </button>
+          <button
+            type="button"
+            className={mode === 'proof' ? 'pill on' : 'pill'}
+            onClick={() => {
+              setMode('proof')
+              setShow(false)
+            }}
+          >
+            Вывод
+          </button>
+        </div>
       </div>
-      {formula.tip && <p className="tip-line">{formula.tip}</p>}
 
-      <div className="formula-actions">
-        <button type="button" className={known ? 'chip active' : 'chip'} onClick={onToggleKnown}>
-          {known ? '✓ Знаю формулу' : 'Отметить: знаю формулу'}
-        </button>
-        <button type="button" className="btn" onClick={onStudyDerive}>
-          Учить вывод по шагам
-        </button>
-      </div>
-      {derivedCount > 0 && <p className="meta">Вывод разобран: {derivedCount}×</p>}
+      <p className="eyebrow">
+        {i + 1}/{deck.length} · {f.family}
+      </p>
+      <h1>{f.title}</h1>
 
-      <section className="conspect-block">
-        <button
-          type="button"
-          className="conspect-toggle"
-          onClick={() => setOpenSteps((v) => !v)}
-        >
-          <span>Вывод</span>
-          <span aria-hidden>{openSteps ? '−' : '+'}</span>
+      {mode === 'formula' ? (
+        show ? (
+          <div className="big-formula">
+            <MathText text={f.formula} />
+          </div>
+        ) : (
+          <p className="prompt">Вспомни формулу целиком</p>
+        )
+      ) : (
+        <>
+          <div className="big-formula soft">
+            <MathText text={f.formula} />
+          </div>
+          {show ? (
+            <ol className="steps">
+              {f.steps.map((s, idx) => (
+                <li key={idx}>
+                  <MathText text={s} />
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p className="prompt">Как вывести из материнских?</p>
+          )}
+        </>
+      )}
+
+      {!show ? (
+        <button type="button" className="btn primary" onClick={() => setShow(true)}>
+          Показать
         </button>
-        {openSteps && (
-          <ol className="derive-steps">
-            {formula.steps.map((s, idx) => (
-              <li key={idx}>
-                <MathText text={s} />
-              </li>
-            ))}
-          </ol>
-        )}
-      </section>
+      ) : (
+        <div className="grade-pair">
+          <button type="button" className="btn bad" onClick={() => advance(false)}>
+            Забыл
+          </button>
+          <button type="button" className="btn good" onClick={() => advance(true)}>
+            Знал
+          </button>
+        </div>
+      )}
     </div>
   )
 }

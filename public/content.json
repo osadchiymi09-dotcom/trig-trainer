@@ -1,475 +1,443 @@
 {
+  "familyOrder": [
+    "Формулы сложения",
+    "Двойной угол",
+    "Понижение степени",
+    "Тройной угол",
+    "Сумма → произведение",
+    "Произведение → сумма",
+    "Универсальная подстановка"
+  ],
   "formulas": [
     {
-      "id": "base-def-tg",
-      "section": "1. База",
-      "title": "Определение тангенса",
-      "formula": "$\\operatorname{tg}\\alpha=\\dfrac{\\sin\\alpha}{\\cos\\alpha}$",
-      "steps": [
-        "На единичной окружности точка $M(\\cos\\alpha;\\sin\\alpha)$.",
-        "Касательная $x=1$ пересекается с лучом угла в точке $(1;t)$.",
-        "По подобию треугольников $\\dfrac{t}{1}=\\dfrac{\\sin\\alpha}{\\cos\\alpha}$.",
-        "Значит $t=\\operatorname{tg}\\alpha=\\sin\\alpha/\\cos\\alpha$."
-      ],
-      "tip": "ctg — то же на касательной y=1"
-    },
-    {
-      "id": "base-ctg",
-      "section": "1. База",
-      "title": "Определение котангенса",
-      "formula": "$\\operatorname{ctg}\\alpha=\\dfrac{\\cos\\alpha}{\\sin\\alpha},\\quad \\operatorname{tg}\\alpha\\cdot\\operatorname{ctg}\\alpha=1$",
-      "steps": [
-        "По определению $\\operatorname{ctg}\\alpha$ — отрезок на касательной $y=1$.",
-        "Из подобия $\\operatorname{ctg}\\alpha=\\cos\\alpha/\\sin\\alpha$.",
-        "Произведение: $(\\sin/\\cos)\\cdot(\\cos/\\sin)=1$."
-      ],
-      "tip": ""
-    },
-    {
-      "id": "base-deg-rad",
-      "section": "1. База",
-      "title": "Градусы ↔ радианы",
-      "formula": "$\\alpha_{\\mathrm{рад}}=\\alpha^\\circ\\cdot\\dfrac{\\pi}{180^\\circ},\\quad \\alpha^\\circ=\\alpha_{\\mathrm{рад}}\\cdot\\dfrac{180^\\circ}{\\pi}$",
-      "steps": [
-        "Полный оборот: $360^\\circ=2\\pi$ радиан.",
-        "Значит $1^\\circ=\\pi/180$ радиан.",
-        "Умножь градусы на $\\pi/180$ — получи радианы (и наоборот)."
-      ],
-      "tip": ""
-    },
-    {
-      "id": "base-main",
-      "section": "1. База",
-      "title": "Основное тождество",
-      "formula": "$\\sin^2\\alpha+\\cos^2\\alpha=1$",
-      "steps": [
-        "Точка $(\\cos\\alpha;\\sin\\alpha)$ лежит на окружности радиуса 1.",
-        "Уравнение окружности: $x^2+y^2=1$.",
-        "Подставь координаты → $\\sin^2\\alpha+\\cos^2\\alpha=1$."
-      ],
-      "tip": "Это Пифагор на единичной окружности"
-    },
-    {
-      "id": "base-tg-id",
-      "section": "1. База",
-      "title": "Следствие для тангенса",
-      "formula": "$1+\\operatorname{tg}^2\\alpha=\\dfrac{1}{\\cos^2\\alpha}$",
-      "steps": [
-        "Старт: $\\sin^2\\alpha+\\cos^2\\alpha=1$.",
-        "Раздели обе части на $\\cos^2\\alpha$ (где $\\cos\\neq 0$).",
-        "Получи $\\operatorname{tg}^2\\alpha+1=1/\\cos^2\\alpha$."
-      ],
-      "tip": ""
-    },
-    {
-      "id": "base-ctg-id",
-      "section": "1. База",
-      "title": "Следствие для котангенса",
-      "formula": "$1+\\operatorname{ctg}^2\\alpha=\\dfrac{1}{\\sin^2\\alpha}$",
-      "steps": [
-        "Старт: $\\sin^2\\alpha+\\cos^2\\alpha=1$.",
-        "Раздели на $\\sin^2\\alpha$ (где $\\sin\\neq 0$).",
-        "Получи $1+\\operatorname{ctg}^2\\alpha=1/\\sin^2\\alpha$."
-      ],
-      "tip": ""
-    },
-    {
-      "id": "base-period-sin",
-      "section": "1. База",
-      "title": "Период sin и cos",
-      "formula": "$T_{\\sin}=T_{\\cos}=2\\pi$",
-      "steps": [
-        "После полного оборота $2\\pi$ точка на окружности та же.",
-        "Значит $\\sin(x+2\\pi)=\\sin x$, $\\cos(x+2\\pi)=\\cos x$.",
-        "$2\\pi$ — наименьший общий период."
-      ],
-      "tip": ""
-    },
-    {
-      "id": "base-period-tg",
-      "section": "1. База",
-      "title": "Период tg и ctg",
-      "formula": "$T_{\\operatorname{tg}}=T_{\\operatorname{ctg}}=\\pi$",
-      "steps": [
-        "$\\operatorname{tg}(x+\\pi)=\\sin(x+\\pi)/\\cos(x+\\pi)$.",
-        "$\\sin(x+\\pi)=-\\sin x$, $\\cos(x+\\pi)=-\\cos x$.",
-        "Минус на минус сокращается → $\\operatorname{tg}(x+\\pi)=\\operatorname{tg} x$."
-      ],
-      "tip": ""
-    },
-    {
-      "id": "base-parity",
-      "section": "1. База",
-      "title": "Чётность / нечётность",
-      "formula": "$\\cos(-x)=\\cos x;\\quad \\sin(-x)=-\\sin x;\\quad \\operatorname{tg}(-x)=-\\operatorname{tg} x$",
-      "steps": [
-        "Углы $x$ и $-x$ симметричны относительно оси $Ox$.",
-        "$x$-координата одна → $\\cos$ чётный.",
-        "$y$-координаты противоположны → $\\sin$ нечётный; tg = sin/cos тоже нечётный."
-      ],
-      "tip": ""
-    },
-    {
-      "id": "base-signs",
-      "section": "1. База",
-      "title": "Знаки по четвертям",
-      "formula": "$\\sin>0$ в I,II; $\\cos>0$ в I,IV; $\\operatorname{tg}>0$ в I,III",
-      "steps": [
-        "$\\sin$ — это $y$: плюс сверху (I–II).",
-        "$\\cos$ — это $x$: плюс справа (I, IV).",
-        "$\\operatorname{tg}=\\sin/\\cos$: плюс, когда знаки одинаковы (I и III)."
-      ],
-      "tip": "Мнемоника: All Students Take Calculus"
-    },
-    {
-      "id": "red-pi2-sin",
-      "section": "2. Приведение",
-      "title": "sin(π/2 − α)",
-      "formula": "$\\sin(\\pi/2-\\alpha)=\\cos\\alpha$",
-      "steps": [
-        "Формула: $\\sin(a-b)=\\sin a\\cos b-\\cos a\\sin b$.",
-        "Подставь $a=\\pi/2$, $b=\\alpha$.",
-        "$\\sin(\\pi/2)=1$, $\\cos(\\pi/2)=0$ → $1\\cdot\\cos\\alpha-0=\\cos\\alpha$."
-      ],
-      "tip": "Правило: сдвиг на π/2 меняет sin↔cos"
-    },
-    {
-      "id": "red-pi2-cos",
-      "section": "2. Приведение",
-      "title": "cos(π/2 − α)",
-      "formula": "$\\cos(\\pi/2-\\alpha)=\\sin\\alpha$",
-      "steps": [
-        "$\\cos(a-b)=\\cos a\\cos b+\\sin a\\sin b$.",
-        "$a=\\pi/2$, $b=\\alpha$: $0\\cdot\\cos\\alpha+1\\cdot\\sin\\alpha=\\sin\\alpha$."
-      ],
-      "tip": ""
-    },
-    {
-      "id": "red-pi-sin",
-      "section": "2. Приведение",
-      "title": "sin(π − α)",
-      "formula": "$\\sin(\\pi-\\alpha)=\\sin\\alpha$",
-      "steps": [
-        "$\\sin(\\pi-\\alpha)=\\sin\\pi\\cos\\alpha-\\cos\\pi\\sin\\alpha$.",
-        "$\\sin\\pi=0$, $\\cos\\pi=-1$.",
-        "Получи $0-(-1)\\sin\\alpha=\\sin\\alpha$."
-      ],
-      "tip": "Сдвиг на π имя функции не меняет"
-    },
-    {
-      "id": "red-pi-cos",
-      "section": "2. Приведение",
-      "title": "cos(π − α)",
-      "formula": "$\\cos(\\pi-\\alpha)=-\\cos\\alpha$",
-      "steps": [
-        "$\\cos(\\pi-\\alpha)=\\cos\\pi\\cos\\alpha+\\sin\\pi\\sin\\alpha$.",
-        "$=-1\\cdot\\cos\\alpha+0=-\\cos\\alpha$."
-      ],
-      "tip": ""
-    },
-    {
-      "id": "red-pi-plus-sin",
-      "section": "2. Приведение",
-      "title": "sin(π + α)",
-      "formula": "$\\sin(\\pi+\\alpha)=-\\sin\\alpha$",
-      "steps": [
-        "$\\sin(\\pi+\\alpha)=\\sin\\pi\\cos\\alpha+\\cos\\pi\\sin\\alpha=0+(-1)\\sin\\alpha=-\\sin\\alpha$."
-      ],
-      "tip": ""
-    },
-    {
-      "id": "red-rules",
-      "section": "2. Приведение",
-      "title": "Два правила приведения",
-      "formula": "знак = знак исходной функции в четверти; $\\pi/2,3\\pi/2$ — смена имени",
-      "steps": [
-        "Возьми $\\alpha\\in(0;\\pi/2)$ и посмотри, в какой четверти стоит угол слева.",
-        "Знак справа = знак исходной функции в этой четверти.",
-        "Если сдвиг $\\pi/2$ или $3\\pi/2$ — sin↔cos, tg↔ctg; если $\\pi$ или $2\\pi$ — имя то же."
-      ],
-      "tip": ""
-    },
-    {
       "id": "add-sin",
-      "section": "3. Сложение",
+      "family": "Формулы сложения",
       "title": "sin(α ± β)",
       "formula": "$\\sin(\\alpha\\pm\\beta)=\\sin\\alpha\\cos\\beta\\pm\\cos\\alpha\\sin\\beta$",
       "steps": [
-        "Это базовая формула (её берут как исходную или выводят через векторы/площадь).",
-        "Запомни структуру: «sin·cos ± cos·sin».",
-        "Знак перед вторым слагаемым совпадает со знаком в скобках."
+        "Это материнская формула: из неё получают двойной угол, суммы и произведения.",
+        "Структура: $\\sin\\cdot\\cos$ и $\\cos\\cdot\\sin$; знак совпадает со знаком в скобках.",
+        "Запомни обе сразу: плюс и минус отличаются только средним знаком."
       ],
-      "tip": "Материнская формула для почти всего дальше"
+      "mother": true,
+      "fromIds": [],
+      "tip": "Мать для sin 2α, sin α±sin β и т.д."
     },
     {
       "id": "add-cos",
-      "section": "3. Сложение",
+      "family": "Формулы сложения",
       "title": "cos(α ± β)",
       "formula": "$\\cos(\\alpha\\pm\\beta)=\\cos\\alpha\\cos\\beta\\mp\\sin\\alpha\\sin\\beta$",
       "steps": [
-        "Структура: «cos·cos ∓ sin·sin».",
-        "Знак перед sin·sin противоположен знаку в скобках.",
-        "Проверка: $\\cos(\\alpha-\\beta)$ имеет плюс у sin·sin."
+        "Материнская формула для косинуса.",
+        "Структура: $\\cos\\cdot\\cos$ и $\\sin\\cdot\\sin$; знак перед sin·sin противоположен скобкам.",
+        "Проверка: $\\cos(\\alpha-\\beta)$ — плюс у произведения синусов."
       ],
-      "tip": ""
+      "mother": true,
+      "fromIds": [],
+      "tip": "Мать для cos 2α и понижения степени"
     },
     {
       "id": "add-tg",
-      "section": "3. Сложение",
+      "family": "Формулы сложения",
       "title": "tg(α ± β)",
       "formula": "$\\operatorname{tg}(\\alpha\\pm\\beta)=\\dfrac{\\operatorname{tg}\\alpha\\pm\\operatorname{tg}\\beta}{1\\mp\\operatorname{tg}\\alpha\\operatorname{tg}\\beta}$",
       "steps": [
-        "Запиши $\\operatorname{tg}(\\alpha+\\beta)=\\sin(\\alpha+\\beta)/\\cos(\\alpha+\\beta)$.",
-        "Раскрой числитель и знаменатель формулами сложения.",
-        "Раздели числитель и знаменатель на $\\cos\\alpha\\cos\\beta$.",
-        "Получи $(\\operatorname{tg}\\alpha+\\operatorname{tg}\\beta)/(1-\\operatorname{tg}\\alpha\\operatorname{tg}\\beta)$."
+        "Берём $\\operatorname{tg}(\\alpha+\\beta)=\\sin(\\alpha+\\beta)/\\cos(\\alpha+\\beta)$.",
+        "Подставляем материнские sin и cos сложения.",
+        "Делим числитель и знаменатель на $\\cos\\alpha\\cos\\beta$ → получаем формулу через tg."
+      ],
+      "mother": true,
+      "fromIds": [
+        "add-sin",
+        "add-cos"
+      ],
+      "tip": "Сама из sin/cos сложения"
+    },
+    {
+      "id": "add-ctg",
+      "family": "Формулы сложения",
+      "title": "ctg(α ± β)",
+      "formula": "$\\operatorname{ctg}(\\alpha\\pm\\beta)=\\dfrac{\\operatorname{ctg}\\alpha\\operatorname{ctg}\\beta\\mp 1}{\\operatorname{ctg}\\beta\\pm\\operatorname{ctg}\\alpha}$",
+      "steps": [
+        "Аналогично tg: $\\operatorname{ctg}=\\cos/\\sin$, подставь материнские cos и sin.",
+        "Или через $\\operatorname{ctg}=1/\\operatorname{tg}$ от формулы tg(α±β)."
+      ],
+      "mother": true,
+      "fromIds": [
+        "add-sin",
+        "add-cos"
       ],
       "tip": ""
     },
     {
       "id": "dbl-sin",
-      "section": "4. Двойной и тройной угол",
+      "family": "Двойной угол",
       "title": "sin 2α",
       "formula": "$\\sin 2\\alpha=2\\sin\\alpha\\cos\\alpha$",
       "steps": [
-        "Запиши $\\sin(\\alpha+\\alpha)$.",
-        "Раскрой: $\\sin\\alpha\\cos\\alpha+\\cos\\alpha\\sin\\alpha$.",
+        "Бери материнскую: $\\sin(\\alpha+\\beta)$ при $\\beta=\\alpha$.",
+        "$\\sin(\\alpha+\\alpha)=\\sin\\alpha\\cos\\alpha+\\cos\\alpha\\sin\\alpha$.",
         "Сложи: $2\\sin\\alpha\\cos\\alpha$."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-sin"
       ],
       "tip": ""
     },
     {
       "id": "dbl-cos",
-      "section": "4. Двойной и тройной угол",
-      "title": "cos 2α (три вида)",
+      "family": "Двойной угол",
+      "title": "cos 2α",
       "formula": "$\\cos 2\\alpha=\\cos^2\\alpha-\\sin^2\\alpha=2\\cos^2\\alpha-1=1-2\\sin^2\\alpha$",
       "steps": [
-        "$\\cos 2\\alpha=\\cos(\\alpha+\\alpha)=\\cos^2\\alpha-\\sin^2\\alpha$.",
-        "Замени $\\cos^2=1-\\sin^2$: $(1-\\sin^2)-\\sin^2=1-2\\sin^2$.",
-        "Или $\\sin^2=1-\\cos^2$: $\\cos^2-(1-\\cos^2)=2\\cos^2-1$."
+        "Мать: $\\cos(\\alpha+\\alpha)=\\cos\\alpha\\cos\\alpha-\\sin\\alpha\\sin\\alpha=\\cos^2-\\sin^2$.",
+        "Через $\\cos^2+\\sin^2=1$: замени $\\sin^2$ → $2\\cos^2-1$.",
+        "Или замени $\\cos^2$ → $1-2\\sin^2$. Три вида — одна формула."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-cos"
       ],
       "tip": ""
     },
     {
       "id": "dbl-tg",
-      "section": "4. Двойной и тройной угол",
+      "family": "Двойной угол",
       "title": "tg 2α",
       "formula": "$\\operatorname{tg} 2\\alpha=\\dfrac{2\\operatorname{tg}\\alpha}{1-\\operatorname{tg}^2\\alpha}$",
       "steps": [
-        "Подставь $\\beta=\\alpha$ в $\\operatorname{tg}(\\alpha+\\beta)$.",
-        "Числитель: $\\operatorname{tg}+\\operatorname{tg}=2\\operatorname{tg}$.",
-        "Знаменатель: $1-\\operatorname{tg}\\cdot\\operatorname{tg}=1-\\operatorname{tg}^2$."
+        "Мать: $\\operatorname{tg}(\\alpha+\\beta)$ при $\\beta=\\alpha$.",
+        "Числитель $2\\operatorname{tg}\\alpha$, знаменатель $1-\\operatorname{tg}^2\\alpha$."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-tg"
       ],
       "tip": ""
     },
     {
-      "id": "pow-sin",
-      "section": "4. Двойной и тройной угол",
-      "title": "Понижение степени sin²",
-      "formula": "$\\sin^2\\alpha=\\dfrac{1-\\cos 2\\alpha}{2}$",
+      "id": "dbl-ctg",
+      "family": "Двойной угол",
+      "title": "ctg 2α",
+      "formula": "$\\operatorname{ctg} 2\\alpha=\\dfrac{\\operatorname{ctg}^2\\alpha-1}{2\\operatorname{ctg}\\alpha}$",
       "steps": [
-        "Возьми $\\cos 2\\alpha=1-2\\sin^2\\alpha$.",
-        "Перенеси: $2\\sin^2\\alpha=1-\\cos 2\\alpha$.",
-        "Раздели на 2."
+        "Из $\\operatorname{ctg}(\\alpha+\\alpha)$ или как $1/\\operatorname{tg} 2\\alpha$.",
+        "Подставь и упрости."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-ctg",
+        "dbl-tg"
       ],
       "tip": ""
     },
     {
       "id": "pow-cos",
-      "section": "4. Двойной и тройной угол",
-      "title": "Понижение степени cos²",
+      "family": "Понижение степени",
+      "title": "cos² α",
       "formula": "$\\cos^2\\alpha=\\dfrac{1+\\cos 2\\alpha}{2}$",
       "steps": [
-        "Возьми $\\cos 2\\alpha=2\\cos^2\\alpha-1$.",
+        "Из двойного угла: $\\cos 2\\alpha=2\\cos^2\\alpha-1$.",
         "Перенеси: $2\\cos^2\\alpha=1+\\cos 2\\alpha$.",
         "Раздели на 2."
+      ],
+      "mother": false,
+      "fromIds": [
+        "dbl-cos"
+      ],
+      "tip": ""
+    },
+    {
+      "id": "pow-sin",
+      "family": "Понижение степени",
+      "title": "sin² α",
+      "formula": "$\\sin^2\\alpha=\\dfrac{1-\\cos 2\\alpha}{2}$",
+      "steps": [
+        "Из $\\cos 2\\alpha=1-2\\sin^2\\alpha$.",
+        "$2\\sin^2\\alpha=1-\\cos 2\\alpha$ → раздели на 2."
+      ],
+      "mother": false,
+      "fromIds": [
+        "dbl-cos"
+      ],
+      "tip": ""
+    },
+    {
+      "id": "pow-tg",
+      "family": "Понижение степени",
+      "title": "tg² α",
+      "formula": "$\\operatorname{tg}^2\\alpha=\\dfrac{1-\\cos 2\\alpha}{1+\\cos 2\\alpha}$",
+      "steps": [
+        "$\\operatorname{tg}^2=\\sin^2/\\cos^2$.",
+        "Подставь оба понижения степени — дроби с $(1\\pm\\cos 2\\alpha)/2$ сократятся."
+      ],
+      "mother": false,
+      "fromIds": [
+        "pow-sin",
+        "pow-cos"
+      ],
+      "tip": ""
+    },
+    {
+      "id": "pow-ctg",
+      "family": "Понижение степени",
+      "title": "ctg² α",
+      "formula": "$\\operatorname{ctg}^2\\alpha=\\dfrac{1+\\cos 2\\alpha}{1-\\cos 2\\alpha}$",
+      "steps": [
+        "Это $1/\\operatorname{tg}^2\\alpha$, или $\\cos^2/\\sin^2$ через понижение."
+      ],
+      "mother": false,
+      "fromIds": [
+        "pow-tg"
       ],
       "tip": ""
     },
     {
       "id": "tri-sin",
-      "section": "4. Двойной и тройной угол",
+      "family": "Тройной угол",
       "title": "sin 3α",
       "formula": "$\\sin 3\\alpha=3\\sin\\alpha-4\\sin^3\\alpha$",
       "steps": [
-        "Запиши $\\sin(2\\alpha+\\alpha)=\\sin 2\\alpha\\cos\\alpha+\\cos 2\\alpha\\sin\\alpha$.",
-        "Подставь $2\\sin\\cos$ и $1-2\\sin^2$.",
-        "Раскрой и замени $\\cos^2=1-\\sin^2$.",
-        "Упрости до $3\\sin\\alpha-4\\sin^3\\alpha$."
+        "Пиши $\\sin(2\\alpha+\\alpha)$ — снова мать сложения.",
+        "Подставь $\\sin 2\\alpha=2\\sin\\cos$ и $\\cos 2\\alpha=1-2\\sin^2$.",
+        "Раскрой, замени $\\cos^2=1-\\sin^2$ → $3\\sin-4\\sin^3$."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-sin",
+        "dbl-sin",
+        "dbl-cos"
       ],
       "tip": ""
     },
     {
       "id": "tri-cos",
-      "section": "4. Двойной и тройной угол",
+      "family": "Тройной угол",
       "title": "cos 3α",
       "formula": "$\\cos 3\\alpha=4\\cos^3\\alpha-3\\cos\\alpha$",
       "steps": [
-        "$\\cos(2\\alpha+\\alpha)=\\cos 2\\alpha\\cos\\alpha-\\sin 2\\alpha\\sin\\alpha$.",
-        "Подставь $2\\cos^2-1$ и $2\\sin\\cos$.",
-        "Упрости через $\\sin^2=1-\\cos^2$ до $4\\cos^3-3\\cos$."
+        "$\\cos(2\\alpha+\\alpha)$ из материнской cos.",
+        "Подставь двойной угол, упрости через $\\sin^2=1-\\cos^2$."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-cos",
+        "dbl-cos",
+        "dbl-sin"
+      ],
+      "tip": ""
+    },
+    {
+      "id": "tri-tg",
+      "family": "Тройной угол",
+      "title": "tg 3α",
+      "formula": "$\\operatorname{tg} 3\\alpha=\\dfrac{3\\operatorname{tg}\\alpha-\\operatorname{tg}^3\\alpha}{1-3\\operatorname{tg}^2\\alpha}$",
+      "steps": [
+        "$\\operatorname{tg}(2\\alpha+\\alpha)$ из материнской tg.",
+        "Подставь $\\operatorname{tg} 2\\alpha$ и упрости."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-tg",
+        "dbl-tg"
+      ],
+      "tip": ""
+    },
+    {
+      "id": "tri-ctg",
+      "family": "Тройной угол",
+      "title": "ctg 3α",
+      "formula": "$\\operatorname{ctg} 3\\alpha=\\dfrac{\\operatorname{ctg}^3\\alpha-3\\operatorname{ctg}\\alpha}{3\\operatorname{ctg}^2\\alpha-1}$",
+      "steps": [
+        "Из $\\operatorname{ctg}(2\\alpha+\\alpha)$ или как обратная к tg 3α."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-ctg",
+        "dbl-ctg"
       ],
       "tip": ""
     },
     {
       "id": "sum-sin",
-      "section": "5. Сумма ↔ произведение",
+      "family": "Сумма → произведение",
       "title": "sin α ± sin β",
       "formula": "$\\sin\\alpha\\pm\\sin\\beta=2\\sin\\dfrac{\\alpha\\pm\\beta}{2}\\cos\\dfrac{\\alpha\\mp\\beta}{2}$",
       "steps": [
-        "Пусть $s=(\\alpha+\\beta)/2$, $d=(\\alpha-\\beta)/2$.",
-        "Тогда $\\alpha=s+d$, $\\beta=s-d$.",
-        "$\\sin(s+d)+\\sin(s-d)=2\\sin s\\cos d$.",
-        "Верни $s$ и $d$ — получи формулу."
+        "Положим $s=(\\alpha+\\beta)/2$, $d=(\\alpha-\\beta)/2$ → $\\alpha=s+d$, $\\beta=s-d$.",
+        "Тогда $\\sin(s+d)+\\sin(s-d)$ — два раза мать sin(±).",
+        "Сложи: $2\\sin s\\cos d$. Верни s и d."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-sin"
       ],
       "tip": ""
     },
     {
-      "id": "sum-cos-plus",
-      "section": "5. Сумма ↔ произведение",
+      "id": "sum-cos-p",
+      "family": "Сумма → произведение",
       "title": "cos α + cos β",
       "formula": "$\\cos\\alpha+\\cos\\beta=2\\cos\\dfrac{\\alpha+\\beta}{2}\\cos\\dfrac{\\alpha-\\beta}{2}$",
       "steps": [
-        "Та же замена $s,d$.",
-        "$\\cos(s+d)+\\cos(s-d)=2\\cos s\\cos d$."
+        "Та же замена s, d.",
+        "$\\cos(s+d)+\\cos(s-d)=2\\cos s\\cos d$ из матери cos."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-cos"
       ],
       "tip": ""
     },
     {
-      "id": "sum-cos-minus",
-      "section": "5. Сумма ↔ произведение",
+      "id": "sum-cos-m",
+      "family": "Сумма → произведение",
       "title": "cos α − cos β",
       "formula": "$\\cos\\alpha-\\cos\\beta=-2\\sin\\dfrac{\\alpha+\\beta}{2}\\sin\\dfrac{\\alpha-\\beta}{2}$",
       "steps": [
         "$\\cos(s+d)-\\cos(s-d)=-2\\sin s\\sin d$.",
-        "Не забудь минус впереди."
+        "Минус впереди — не потеряй."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-cos"
       ],
       "tip": ""
     },
     {
-      "id": "prod-sin",
-      "section": "5. Сумма ↔ произведение",
-      "title": "sin α · sin β",
-      "formula": "$\\sin\\alpha\\sin\\beta=\\dfrac{1}{2}\\bigl(\\cos(\\alpha-\\beta)-\\cos(\\alpha+\\beta)\\bigr)$",
+      "id": "sum-tg",
+      "family": "Сумма → произведение",
+      "title": "tg α ± tg β",
+      "formula": "$\\operatorname{tg}\\alpha\\pm\\operatorname{tg}\\beta=\\dfrac{\\sin(\\alpha\\pm\\beta)}{\\cos\\alpha\\cos\\beta}$",
       "steps": [
-        "Запиши $\\cos(\\alpha-\\beta)=\\cos\\alpha\\cos\\beta+\\sin\\alpha\\sin\\beta$.",
-        "Запиши $\\cos(\\alpha+\\beta)=\\cos\\alpha\\cos\\beta-\\sin\\alpha\\sin\\beta$.",
+        "$\\operatorname{tg}\\alpha\\pm\\operatorname{tg}\\beta=\\sin\\alpha/\\cos\\alpha\\pm\\sin\\beta/\\cos\\beta$.",
+        "Общий знаменатель $\\cos\\alpha\\cos\\beta$.",
+        "Числитель = $\\sin(\\alpha\\pm\\beta)$ по матери sin."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-sin"
+      ],
+      "tip": ""
+    },
+    {
+      "id": "sum-ctg",
+      "family": "Сумма → произведение",
+      "title": "ctg α ± ctg β",
+      "formula": "$\\operatorname{ctg}\\alpha\\pm\\operatorname{ctg}\\beta=\\dfrac{\\sin(\\beta\\pm\\alpha)}{\\sin\\alpha\\sin\\beta}$",
+      "steps": [
+        "Аналогично через общий знаменатель $\\sin\\alpha\\sin\\beta$ и мать sin."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-sin"
+      ],
+      "tip": ""
+    },
+    {
+      "id": "prod-ss",
+      "family": "Произведение → сумма",
+      "title": "sin α · sin β",
+      "formula": "$\\sin\\alpha\\sin\\beta=\\dfrac{\\cos(\\alpha-\\beta)-\\cos(\\alpha+\\beta)}{2}$",
+      "steps": [
+        "Выпиши мать: $\\cos(\\alpha-\\beta)$ и $\\cos(\\alpha+\\beta)$.",
         "Вычти второе из первого: $2\\sin\\alpha\\sin\\beta$.",
         "Раздели на 2."
       ],
-      "tip": ""
-    },
-    {
-      "id": "prod-cos",
-      "section": "5. Сумма ↔ произведение",
-      "title": "cos α · cos β",
-      "formula": "$\\cos\\alpha\\cos\\beta=\\dfrac{1}{2}\\bigl(\\cos(\\alpha-\\beta)+\\cos(\\alpha+\\beta)\\bigr)$",
-      "steps": [
-        "Сложи $\\cos(\\alpha-\\beta)$ и $\\cos(\\alpha+\\beta)$.",
-        "Получи $2\\cos\\alpha\\cos\\beta$, раздели на 2."
+      "mother": false,
+      "fromIds": [
+        "add-cos"
       ],
       "tip": ""
     },
     {
-      "id": "prod-sincos",
-      "section": "5. Сумма ↔ произведение",
+      "id": "prod-sc",
+      "family": "Произведение → сумма",
       "title": "sin α · cos β",
-      "formula": "$\\sin\\alpha\\cos\\beta=\\dfrac{1}{2}\\bigl(\\sin(\\alpha+\\beta)+\\sin(\\alpha-\\beta)\\bigr)$",
+      "formula": "$\\sin\\alpha\\cos\\beta=\\dfrac{\\sin(\\alpha-\\beta)+\\sin(\\alpha+\\beta)}{2}$",
       "steps": [
-        "Сложи $\\sin(\\alpha+\\beta)$ и $\\sin(\\alpha-\\beta)$.",
+        "Сложи материнские $\\sin(\\alpha+\\beta)$ и $\\sin(\\alpha-\\beta)$.",
         "Получи $2\\sin\\alpha\\cos\\beta$, раздели на 2."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-sin"
+      ],
+      "tip": ""
+    },
+    {
+      "id": "prod-cc",
+      "family": "Произведение → сумма",
+      "title": "cos α · cos β",
+      "formula": "$\\cos\\alpha\\cos\\beta=\\dfrac{\\cos(\\alpha-\\beta)+\\cos(\\alpha+\\beta)}{2}$",
+      "steps": [
+        "Сложи $\\cos(\\alpha-\\beta)$ и $\\cos(\\alpha+\\beta)$ из матери cos.",
+        "Раздели на 2."
+      ],
+      "mother": false,
+      "fromIds": [
+        "add-cos"
       ],
       "tip": ""
     },
     {
       "id": "wei-sin",
-      "section": "6. Универсальная подстановка",
+      "family": "Универсальная подстановка",
       "title": "sin через t = tg(α/2)",
-      "formula": "$\\sin\\alpha=\\dfrac{2t}{1+t^2},\\quad t=\\operatorname{tg}\\dfrac{\\alpha}{2}$",
+      "formula": "$\\sin\\alpha=\\dfrac{2t}{1+t^2},\\ t=\\operatorname{tg}\\dfrac{\\alpha}{2}$",
       "steps": [
-        "Запиши $\\sin\\alpha=2\\sin(\\alpha/2)\\cos(\\alpha/2)$.",
+        "Из двойного угла: $\\sin\\alpha=2\\sin(\\alpha/2)\\cos(\\alpha/2)$.",
         "Раздели числитель и знаменатель на $\\cos^2(\\alpha/2)$.",
-        "Числитель → $2t$, знаменатель → $1+t^2$."
+        "Сверху $2t$, снизу $1+t^2$ (т.к. $1+\\operatorname{tg}^2=1/\\cos^2$)."
       ],
-      "tip": ""
+      "mother": false,
+      "fromIds": [
+        "dbl-sin"
+      ],
+      "tip": "t = tg(α/2)"
     },
     {
       "id": "wei-cos",
-      "section": "6. Универсальная подстановка",
+      "family": "Универсальная подстановка",
       "title": "cos через t = tg(α/2)",
-      "formula": "$\\cos\\alpha=\\dfrac{1-t^2}{1+t^2},\\quad t=\\operatorname{tg}\\dfrac{\\alpha}{2}$",
+      "formula": "$\\cos\\alpha=\\dfrac{1-t^2}{1+t^2},\\ t=\\operatorname{tg}\\dfrac{\\alpha}{2}$",
       "steps": [
-        "$\\cos\\alpha=\\cos^2(\\alpha/2)-\\sin^2(\\alpha/2)$.",
-        "Раздели на $\\cos^2(\\alpha/2)$: $1-t^2$ сверху, $1+t^2$ снизу."
+        "$\\cos\\alpha=\\cos^2(\\alpha/2)-\\sin^2(\\alpha/2)$ (это cos 2β).",
+        "Дели на $\\cos^2(\\alpha/2)$: $(1-t^2)/(1+t^2)$."
+      ],
+      "mother": false,
+      "fromIds": [
+        "dbl-cos"
       ],
       "tip": ""
     },
     {
       "id": "wei-tg",
-      "section": "6. Универсальная подстановка",
+      "family": "Универсальная подстановка",
       "title": "tg через t = tg(α/2)",
-      "formula": "$\\operatorname{tg}\\alpha=\\dfrac{2t}{1-t^2},\\quad t=\\operatorname{tg}\\dfrac{\\alpha}{2}$",
+      "formula": "$\\operatorname{tg}\\alpha=\\dfrac{2t}{1-t^2},\\ t=\\operatorname{tg}\\dfrac{\\alpha}{2}$",
       "steps": [
-        "Это частный случай $\\operatorname{tg} 2\\beta$ при $\\beta=\\alpha/2$, $t=\\operatorname{tg}\\beta$."
+        "Это просто $\\operatorname{tg} 2\\beta$ при $\\beta=\\alpha/2$, $t=\\operatorname{tg}\\beta$."
+      ],
+      "mother": false,
+      "fromIds": [
+        "dbl-tg"
       ],
       "tip": ""
     },
     {
-      "id": "aux",
-      "section": "7. Вспомогательный аргумент",
-      "title": "a sin x + b cos x",
-      "formula": "$a\\sin x+b\\cos x=\\sqrt{a^2+b^2}\\,\\sin(x+\\varphi)$",
+      "id": "wei-ctg",
+      "family": "Универсальная подстановка",
+      "title": "ctg через t = tg(α/2)",
+      "formula": "$\\operatorname{ctg}\\alpha=\\dfrac{1-t^2}{2t},\\ t=\\operatorname{tg}\\dfrac{\\alpha}{2}$",
       "steps": [
-        "Вынеси $R=\\sqrt{a^2+b^2}$.",
-        "Получи $R\\big((a/R)\\sin x+(b/R)\\cos x\\big)$.",
-        "Выбери $\\varphi$: $\\cos\\varphi=a/R$, $\\sin\\varphi=b/R$.",
-        "Скобка = $\\sin(x+\\varphi)$."
+        "Обратная к tg: $(1-t^2)/(2t)$."
       ],
-      "tip": "Сводит сумму к одному синусу"
-    },
-    {
-      "id": "inv-ranges",
-      "section": "8. Обратные и уравнения",
-      "title": "Области значений обратных",
-      "formula": "$\\arcsin\\in[-\\pi/2;\\pi/2],\\ \\arccos\\in[0;\\pi],\\ \\operatorname{arctg}\\in(-\\pi/2;\\pi/2)$",
-      "steps": [
-        "Обратная функция берёт одно главное значение.",
-        "arcsin/arctg — правая/верхняя ветка около 0.",
-        "arccos — от 0 до π (неотрицательная «дуга»)."
-      ],
-      "tip": ""
-    },
-    {
-      "id": "eq-sin",
-      "section": "8. Обратные и уравнения",
-      "title": "sin x = a",
-      "formula": "$x=(-1)^k\\arcsin a+\\pi k,\\ k\\in\\mathbb{Z}$",
-      "steps": [
-        "Пусть $\\alpha=\\arcsin a$. Тогда $\\sin\\alpha=a$ и $\\sin(\\pi-\\alpha)=a$.",
-        "Все углы: $\\alpha+2\\pi n$ или $\\pi-\\alpha+2\\pi n$.",
-        "Две серии сжимаются в $x=(-1)^k\\alpha+\\pi k$."
-      ],
-      "tip": ""
-    },
-    {
-      "id": "eq-cos",
-      "section": "8. Обратные и уравнения",
-      "title": "cos x = a",
-      "formula": "$x=\\pm\\arccos a+2\\pi k,\\ k\\in\\mathbb{Z}$",
-      "steps": [
-        "На окружности два угла с данным косинусом: $\\pm\\arccos a$.",
-        "Плюс период $2\\pi$."
-      ],
-      "tip": ""
-    },
-    {
-      "id": "eq-tg",
-      "section": "8. Обратные и уравнения",
-      "title": "tg x = a",
-      "formula": "$x=\\operatorname{arctg} a+\\pi k,\\ k\\in\\mathbb{Z}$",
-      "steps": [
-        "Одно главное значение $\\operatorname{arctg} a$.",
-        "Период тангенса $\\pi$ → прибавляй $\\pi k$."
+      "mother": false,
+      "fromIds": [
+        "wei-tg"
       ],
       "tip": ""
     }

@@ -1,119 +1,77 @@
 import { useEffect, useMemo, useState } from 'react'
-import { LoginScreen } from './components/LoginScreen'
-import { DeriveWalkthrough, FormulaDrill, FormulaPage } from './components/Study'
+import { AnimatePresence, motion } from 'framer-motion'
+import { DeriveFlow, Drill, FormulaSheet } from './components/Study'
 import { MathText } from './components/MathText'
 import {
-  clearSession,
-  computeMasteryPercent,
-  getSessionLogin,
-  loginOrRegister,
-  saveUserProgress,
-} from './lib/auth'
-import { isDue, reviewCard, touchStreak } from './lib/progress'
-import { groupBySection, useFormulas } from './lib/useContent'
+  isDue,
+  loadProgress,
+  masteryPercent,
+  reviewCard,
+  saveProgress,
+  touchStreak,
+} from './lib/progress'
+import { byFamily, useContent } from './lib/useContent'
 import type { Formula, ProgressState } from './types'
 import './App.css'
 
 type View =
-  | { name: 'list' }
+  | { name: 'home' }
   | { name: 'formula'; id: string }
   | { name: 'derive'; id: string }
-  | { name: 'drill'; filter: 'all' | 'due' | 'section'; section?: string }
+  | { name: 'drill'; scope: 'all' | 'mothers' | 'due' | 'family'; family?: string }
 
 export default function App() {
-  const { formulas, loading, error } = useFormulas()
-  const [user, setUser] = useState<string | null>(() => getSessionLogin())
-  const [progress, setProgress] = useState<ProgressState | null>(() => {
-    const login = getSessionLogin()
-    if (!login) return null
-    try {
-      return loginOrRegister(login).progress
-    } catch {
-      return null
-    }
-  })
-  const [view, setView] = useState<View>({ name: 'list' })
-  const [query, setQuery] = useState('')
+  const { data, loading, error } = useContent()
+  const [progress, setProgress] = useState<ProgressState>(() => loadProgress())
+  const [view, setView] = useState<View>({ name: 'home' })
+  const [started, setStarted] = useState(false)
 
   useEffect(() => {
-    if (!user || !progress) return
-    saveUserProgress(user, progress)
-  }, [user, progress])
+    saveProgress(progress)
+  }, [progress])
 
-  const sections = useMemo(() => groupBySection(formulas), [formulas])
-  const byId = useMemo(() => {
+  const formulas = data?.formulas ?? []
+  const order = data?.familyOrder ?? []
+  const map = useMemo(() => {
     const m = new Map<string, Formula>()
     for (const f of formulas) m.set(f.id, f)
     return m
   }, [formulas])
 
-  const mastery = progress ? computeMasteryPercent(progress, formulas.length) : 0
-  const knownN = progress?.mastered.length ?? 0
-  const dueN = progress
-    ? formulas.filter((f) => isDue(progress.cards[f.id])).length
-    : 0
-
-  const filteredSections = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    if (!q) return sections
-    const out: Record<string, Formula[]> = {}
-    for (const [sec, list] of Object.entries(sections)) {
-      const hit = list.filter(
-        (f) =>
-          f.title.toLowerCase().includes(q) ||
-          f.formula.toLowerCase().includes(q) ||
-          f.section.toLowerCase().includes(q),
-      )
-      if (hit.length) out[sec] = hit
-    }
-    return out
-  }, [sections, query])
+  const groups = useMemo(() => byFamily(formulas, order), [formulas, order])
+  const mothers = useMemo(() => formulas.filter((f) => f.mother), [formulas])
+  const mastery = masteryPercent(progress, formulas.length)
+  const dueCount = formulas.filter((f) => isDue(progress.cards[f.id])).length
 
   const patch = (fn: (p: ProgressState) => ProgressState) => {
-    setProgress((p) => (p ? touchStreak(fn(p)) : p))
+    setProgress((p) => touchStreak(fn(p)))
   }
 
-  const logout = () => {
-    clearSession()
-    setUser(null)
-    setProgress(null)
-    setView({ name: 'list' })
-  }
-
-  if (loading) return <div className="boot">Загрузка формул…</div>
-  if (error) return <div className="boot error">{error}</div>
-
-  if (!user || !progress) {
-    return (
-      <LoginScreen
-        onSuccess={(login, p) => {
-          setUser(login)
-          setProgress(p)
-        }}
-      />
-    )
-  }
+  if (loading) return <div className="boot">Собираю формулы…</div>
+  if (error || !data) return <div className="boot error">{error ?? 'Нет данных'}</div>
 
   const current =
-    view.name === 'formula' || view.name === 'derive' ? byId.get(view.id) : undefined
+    view.name === 'formula' || view.name === 'derive' ? map.get(view.id) : undefined
 
   if (view.name === 'formula' && current) {
+    const parents = current.fromIds.map((id) => map.get(id)).filter(Boolean) as Formula[]
     return (
-      <div className="app">
-        <FormulaPage
+      <div className="page">
+        <FormulaSheet
           formula={current}
-          known={progress.mastered.includes(current.id)}
-          derivedCount={progress.deriveDone[current.id] ?? 0}
-          onBack={() => setView({ name: 'list' })}
+          parents={parents}
+          known={progress.known.includes(current.id)}
+          derived={progress.derived.includes(current.id)}
+          onClose={() => setView({ name: 'home' })}
+          onDerive={() => setView({ name: 'derive', id: current.id })}
           onToggleKnown={() =>
             patch((p) => {
-              const set = new Set(p.mastered)
-              if (set.has(current.id)) set.delete(current.id)
-              else set.add(current.id)
-              return { ...p, mastered: [...set] }
+              const s = new Set(p.known)
+              if (s.has(current.id)) s.delete(current.id)
+              else s.add(current.id)
+              return { ...p, known: [...s] }
             })
           }
-          onStudyDerive={() => setView({ name: 'derive', id: current.id })}
         />
       </div>
     )
@@ -121,31 +79,16 @@ export default function App() {
 
   if (view.name === 'derive' && current) {
     return (
-      <div className="app">
-        <header className="topbar">
-          <button type="button" className="back" onClick={() => setView({ name: 'formula', id: current.id })}>
-            ← К формуле
-          </button>
-          <div className="user-pill">
-            <span>{user}</span>
-          </div>
-        </header>
-        <DeriveWalkthrough
+      <div className="page">
+        <DeriveFlow
           formula={current}
+          onBack={() => setView({ name: 'formula', id: current.id })}
           onDone={() => {
             patch((p) => ({
               ...p,
-              deriveDone: {
-                ...p.deriveDone,
-                [current.id]: (p.deriveDone[current.id] ?? 0) + 1,
-              },
+              derived: [...new Set([...p.derived, current.id])],
             }))
-            // go to next formula in same section if any
-            const list = sections[current.section] ?? []
-            const idx = list.findIndex((f) => f.id === current.id)
-            const next = list[idx + 1]
-            if (next) setView({ name: 'derive', id: next.id })
-            else setView({ name: 'formula', id: current.id })
+            setView({ name: 'formula', id: current.id })
           }}
         />
       </div>
@@ -154,145 +97,176 @@ export default function App() {
 
   if (view.name === 'drill') {
     let pool = formulas
-    if (view.filter === 'due') pool = formulas.filter((f) => isDue(progress.cards[f.id]))
-    if (view.filter === 'section' && view.section) {
-      pool = formulas.filter((f) => f.section === view.section)
+    if (view.scope === 'mothers') pool = mothers
+    if (view.scope === 'due') pool = formulas.filter((f) => isDue(progress.cards[f.id]))
+    if (view.scope === 'family' && view.family) {
+      pool = formulas.filter((f) => f.family === view.family)
     }
     return (
-      <div className="app">
-        <header className="topbar">
-          <button type="button" className="back" onClick={() => setView({ name: 'list' })}>
-            ← Список
-          </button>
-          <div className="topbar-title">
-            <h1>Тренировка</h1>
-          </div>
-          <div className="user-pill">
-            <span>{user}</span>
-          </div>
-        </header>
-        <main className="stage">
-          <FormulaDrill
-            items={pool}
-            onGrade={(id, grade) =>
-              patch((p) => {
-                const cards = {
-                  ...p.cards,
-                  [id]: reviewCard(p.cards[id], grade),
-                }
-                const mastered = new Set(p.mastered)
-                if (grade === 3) mastered.add(id)
-                if (grade === 0) mastered.delete(id)
-                return { ...p, cards, mastered: [...mastered] }
-              })
-            }
-          />
-        </main>
+      <div className="page">
+        <Drill
+          pool={pool}
+          onExit={() => setView({ name: 'home' })}
+          onGrade={(id, ok) =>
+            patch((p) => {
+              const cards = { ...p.cards, [id]: reviewCard(p.cards[id], ok ? 3 : 0) }
+              const known = new Set(p.known)
+              if (ok) known.add(id)
+              else known.delete(id)
+              return { ...p, cards, known: [...known] }
+            })
+          }
+        />
       </div>
     )
   }
 
   return (
-    <div className="app home">
-      <header className="hero">
-        <div className="hero-top">
-          <p className="brand">Тригонометрия</p>
-          <div className="user-pill">
-            <span>{user}</span>
-            <strong>{mastery}%</strong>
-            <button type="button" className="linkish" onClick={logout}>
-              Выйти
-            </button>
-          </div>
-        </div>
-        <h1>Список формул и выводов</h1>
-        <p className="hero-sub">
-          Открой формулу → прочитай вывод → отметь «знаю» или пройди шаги. Потом гоняй
-          карточками.
-        </p>
-        <div className="stats">
-          <div>
-            <strong>{formulas.length}</strong>
-            <span>формул</span>
-          </div>
-          <div>
-            <strong>{knownN}</strong>
-            <span>знаю</span>
-          </div>
-          <div>
-            <strong>{dueN}</strong>
-            <span>к повтору</span>
-          </div>
-          <div>
-            <strong>{progress.streak}</strong>
-            <span>дней</span>
-          </div>
-        </div>
-        <div className="hero-actions">
-          <button type="button" className="btn" onClick={() => setView({ name: 'drill', filter: 'due' })}>
-            Повторить ({dueN})
-          </button>
-          <button
-            type="button"
-            className="btn secondary"
-            onClick={() => setView({ name: 'drill', filter: 'all' })}
+    <div className="site">
+      {!started ? (
+        <section className="landing">
+          <div className="landing-bg" aria-hidden />
+          <motion.div
+            className="landing-inner"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            Тренировать все
-          </button>
-        </div>
-      </header>
-
-      <div className="toolbar">
-        <input
-          className="search"
-          placeholder="Найти формулу…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </div>
-
-      <div className="sections">
-        {Object.entries(filteredSections).map(([section, list]) => (
-          <section key={section} className="section">
-            <div className="section-head">
-              <h2>{section}</h2>
+            <p className="brand">Материнские</p>
+            <h1>Выучи формулы через вывод, а не зубрение</h1>
+            <p className="lede">
+              Четыре формулы сложения — матери. Остальные на этом сайте выводятся из них.
+            </p>
+            <button
+              type="button"
+              className="btn primary lg"
+              onClick={() => setStarted(true)}
+            >
+              Открыть формулы
+            </button>
+          </motion.div>
+          <motion.div
+            className="orbit"
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.15, duration: 0.9 }}
+          />
+        </section>
+      ) : (
+        <main className="main">
+          <header className="top">
+            <div>
+              <p className="brand sm">Материнские</p>
+              <p className="muted compact">
+                {progress.known.length} знаю · {progress.derived.length} выводов · {mastery}%
+              </p>
+            </div>
+            <div className="top-actions">
               <button
                 type="button"
-                className="linkish"
-                onClick={() => setView({ name: 'drill', filter: 'section', section })}
+                className="btn"
+                onClick={() => setView({ name: 'drill', scope: 'due' })}
               >
-                Учить раздел
+                Повтор ({dueCount})
+              </button>
+              <button
+                type="button"
+                className="btn primary"
+                onClick={() => setView({ name: 'drill', scope: 'all' })}
+              >
+                Тренировка
               </button>
             </div>
-            <ul className="formula-list">
-              {list.map((f) => {
-                const known = progress.mastered.includes(f.id)
-                const derived = (progress.deriveDone[f.id] ?? 0) > 0
-                return (
-                  <li key={f.id}>
-                    <button
-                      type="button"
-                      className="formula-row"
-                      onClick={() => setView({ name: 'formula', id: f.id })}
-                    >
-                      <span className="formula-row-title">
-                        {f.title}
-                        <span className="marks">
-                          {known ? ' · знаю' : ''}
-                          {derived ? ' · вывод' : ''}
-                        </span>
-                      </span>
-                      <span className="formula-row-math">
-                        <MathText text={f.formula} />
-                      </span>
-                    </button>
-                  </li>
-                )
-              })}
-            </ul>
+          </header>
+
+          <section className="mothers-block">
+            <div className="block-head">
+              <h2>Материнские формулы</h2>
+              <button
+                type="button"
+                className="ghost"
+                onClick={() => setView({ name: 'drill', scope: 'mothers' })}
+              >
+                Учить матерей →
+              </button>
+            </div>
+            <p className="muted">Выучи эти четыре — остальное собирается из них.</p>
+            <div className="mother-grid">
+              {mothers.map((f, idx) => (
+                <motion.button
+                  key={f.id}
+                  type="button"
+                  className="mother-tile"
+                  onClick={() => setView({ name: 'formula', id: f.id })}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.06, duration: 0.4 }}
+                >
+                  <span className="tile-title">{f.title}</span>
+                  <span className="tile-math">
+                    <MathText text={f.formula} />
+                  </span>
+                  {(progress.known.includes(f.id) || progress.derived.includes(f.id)) && (
+                    <span className="tile-mark">
+                      {progress.known.includes(f.id) ? 'знаю' : ''}
+                      {progress.derived.includes(f.id) ? ' · вывод' : ''}
+                    </span>
+                  )}
+                </motion.button>
+              ))}
+            </div>
           </section>
-        ))}
-      </div>
+
+          {groups
+            .filter((g) => g.family !== mothers[0]?.family)
+            .map((g) => (
+              <section key={g.family} className="family-block">
+                <div className="block-head">
+                  <h2>{g.family}</h2>
+                  <button
+                    type="button"
+                    className="ghost"
+                    onClick={() =>
+                      setView({ name: 'drill', scope: 'family', family: g.family })
+                    }
+                  >
+                    Учить раздел →
+                  </button>
+                </div>
+                <ul className="formula-lines">
+                  <AnimatePresence>
+                    {g.items.map((f) => (
+                      <li key={f.id}>
+                        <button
+                          type="button"
+                          className="line"
+                          onClick={() => setView({ name: 'formula', id: f.id })}
+                        >
+                          <span className="line-left">
+                            <strong>{f.title}</strong>
+                            {f.fromIds.length > 0 && (
+                              <span className="from-mini">
+                                ← {f.fromIds.map((id) => map.get(id)?.title).filter(Boolean).join(', ')}
+                              </span>
+                            )}
+                          </span>
+                          <span className="line-math">
+                            <MathText text={f.formula} />
+                          </span>
+                          <span className="line-flags">
+                            {progress.known.includes(f.id) ? '✓' : ''}
+                            {progress.derived.includes(f.id) ? '∴' : ''}
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </AnimatePresence>
+                </ul>
+              </section>
+            ))}
+        </main>
+      )}
     </div>
   )
 }

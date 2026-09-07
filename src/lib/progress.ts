@@ -1,13 +1,13 @@
 import type { CardState, ProgressState } from '../types'
 
-const KEY = 'ege-bio-progress-v1'
+const KEY = 'trig-mother-progress-v2'
 
 export function todayKey(): string {
   return new Date().toISOString().slice(0, 10)
 }
 
 export function defaultProgress(): ProgressState {
-  return { cards: {}, mastered: [], streak: 0, lastStudyDay: '', deriveDone: {} }
+  return { cards: {}, known: [], derived: [], streak: 0, lastStudyDay: '' }
 }
 
 export function loadProgress(): ProgressState {
@@ -34,7 +34,6 @@ export function touchStreak(p: ProgressState): ProgressState {
   return { ...p, streak, lastStudyDay: today }
 }
 
-/** SM-2 inspired scheduling */
 export function reviewCard(state: CardState | undefined, grade: 0 | 1 | 2 | 3): CardState {
   const now = Date.now()
   let ease = state?.ease ?? 2.5
@@ -62,4 +61,10 @@ export function reviewCard(state: CardState | undefined, grade: 0 | 1 | 2 | 3): 
 export function isDue(state: CardState | undefined): boolean {
   if (!state) return true
   return state.due <= Date.now()
+}
+
+export function masteryPercent(p: ProgressState, n: number): number {
+  if (n <= 0) return 0
+  const k = new Set([...p.known, ...p.derived]).size
+  return Math.round((k / n) * 100)
 }

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import type { Formula } from '../types'
+import type { ContentFile, Formula } from '../types'
 
-export function useFormulas() {
-  const [formulas, setFormulas] = useState<Formula[]>([])
+export function useContent() {
+  const [data, setData] = useState<ContentFile | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -10,13 +10,12 @@ export function useFormulas() {
     let cancelled = false
     ;(async () => {
       try {
-        const base = import.meta.env.BASE_URL
-        const res = await fetch(`${base}content.json`)
-        if (!res.ok) throw new Error(`Не удалось загрузить content.json (${res.status})`)
-        const data = (await res.json()) as { formulas: Formula[] }
-        if (!cancelled) setFormulas(data.formulas ?? [])
+        const res = await fetch(`${import.meta.env.BASE_URL}content.json`)
+        if (!res.ok) throw new Error(`Загрузка не удалась (${res.status})`)
+        const json = (await res.json()) as ContentFile
+        if (!cancelled) setData(json)
       } catch (e) {
-        if (!cancelled) setError(e instanceof Error ? e.message : 'Ошибка загрузки')
+        if (!cancelled) setError(e instanceof Error ? e.message : 'Ошибка')
       } finally {
         if (!cancelled) setLoading(false)
       }
@@ -26,13 +25,15 @@ export function useFormulas() {
     }
   }, [])
 
-  return { formulas, loading, error }
+  return { data, loading, error }
 }
 
-export function groupBySection(formulas: Formula[]): Record<string, Formula[]> {
-  const out: Record<string, Formula[]> = {}
+export function byFamily(formulas: Formula[], order: string[]): { family: string; items: Formula[] }[] {
+  const map = new Map<string, Formula[]>()
   for (const f of formulas) {
-    ;(out[f.section] ??= []).push(f)
+    ;(map.get(f.family) ?? map.set(f.family, []).get(f.family)!).push(f)
   }
-  return out
+  return order
+    .filter((name) => map.has(name))
+    .map((family) => ({ family, items: map.get(family)! }))
 }
