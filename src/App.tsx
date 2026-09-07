@@ -1,121 +1,224 @@
 import { useEffect, useMemo, useState } from 'react'
-import { motion } from 'framer-motion'
-import { LessonPlayer } from './components/LessonPlayer'
 import { MathText } from './components/MathText'
-import { CHAPTERS, lessons } from './data/lessons'
-import {
-  isUnlocked,
-  loadProgress,
-  markDone,
-  saveProgress,
-  type Progress,
-} from './lib/progress'
+import { formulas, GROUPS, type Formula } from './data/formulas'
 import './App.css'
 
+const KEY = 'trig-chains-v1'
+
+type Progress = { known: string[] }
+
+function load(): Progress {
+  try {
+    return { known: JSON.parse(localStorage.getItem(KEY) || '{"known":[]}').known ?? [] }
+  } catch {
+    return { known: [] }
+  }
+}
+
+type Mode = 'list' | 'view' | 'drill'
+
 export default function App() {
-  const [progress, setProgress] = useState<Progress>(() => loadProgress())
-  const [lessonId, setLessonId] = useState<string | null>(null)
-  const [entered, setEntered] = useState(false)
+  const [progress, setProgress] = useState<Progress>(() => load())
+  const [mode, setMode] = useState<Mode>('list')
+  const [id, setId] = useState<string | null>(null)
+  const [reveal, setReveal] = useState(0)
+  const [drillI, setDrillI] = useState(0)
+  const [showAns, setShowAns] = useState(false)
 
   useEffect(() => {
-    saveProgress(progress)
+    localStorage.setItem(KEY, JSON.stringify(progress))
   }, [progress])
 
-  const doneSet = useMemo(() => new Set(progress.done), [progress.done])
-  const pct = Math.round((progress.done.length / lessons.length) * 100)
-  const current = lessons.find((l) => l.id === lessonId)
+  const f = useMemo(() => formulas.find((x) => x.id === id) ?? null, [id])
+  const known = new Set(progress.known)
 
-  if (lessonId && current) {
+  const open = (fid: string) => {
+    setId(fid)
+    setReveal(0)
+    setMode('view')
+  }
+
+  const startDrill = (pool?: Formula[]) => {
+    const list = pool ?? formulas
+    setDrillI(0)
+    setShowAns(false)
+    setId(list[0]?.id ?? null)
+    setMode('drill')
+    // store pool order in session via reshuffle of ids in state - use all formulas order for simplicity
+  }
+
+  const drillPool = formulas
+  const drillItem = drillPool[drillI]
+
+  if (mode === 'view' && f) {
     return (
-      <div className="shell">
-        <LessonPlayer
-          lesson={current}
-          onBack={() => setLessonId(null)}
-          onSkip={() => {
-            setProgress((p) => markDone(current.id, p))
-            const idx = lessons.findIndex((l) => l.id === current.id)
-            const next = lessons[idx + 1]
-            if (next) setLessonId(next.id)
-            else setLessonId(null)
-          }}
-          onComplete={() => {
-            setProgress((p) => markDone(current.id, p))
-            const idx = lessons.findIndex((l) => l.id === current.id)
-            const next = lessons[idx + 1]
-            if (next) setLessonId(next.id)
-            else setLessonId(null)
-          }}
-        />
+      <div className="wrap">
+        <div className="top">
+          <button type="button" className="link" onClick={() => setMode('list')}>
+            ← Список
+          </button>
+          <button
+            type="button"
+            className="link"
+            onClick={() => {
+              setShowAns(false)
+              setMode('drill')
+              setDrillI(formulas.findIndex((x) => x.id === f.id))
+            }}
+          >
+            Учить цепочку
+          </button>
+        </div>
+
+        <p className="group">{f.group}</p>
+        <h1>{f.name}</h1>
+        {f.base && <p className="base-tag">База — запомнить как есть</p>}
+
+        <div className="result">
+          <MathText text={f.result} />
+        </div>
+
+        <h2>Вывод (цепочка)</h2>
+        <ol className="chain">
+          {f.chain.map((line, i) => (
+            <li key={i} className={i < reveal || reveal >= f.chain.length ? 'on' : 'dim'}>
+              {i < reveal || reveal >= f.chain.length ? (
+                <MathText text={line} />
+              ) : (
+                <span className="hide">····</span>
+              )}
+            </li>
+          ))}
+        </ol>
+
+        <div className="actions">
+          {reveal < f.chain.length ? (
+            <button type="button" className="btn" onClick={() => setReveal((r) => r + 1)}>
+              Следующая строка ({reveal}/{f.chain.length})
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn"
+              onClick={() =>
+                setProgress((p) =>
+                  p.known.includes(f.id) ? p : { known: [...p.known, f.id] },
+                )
+              }
+            >
+              {known.has(f.id) ? 'Уже в известных' : 'Запомнил'}
+            </button>
+          )}
+          <button type="button" className="btn ghost" onClick={() => setReveal(f.chain.length)}>
+            Показать всё
+          </button>
+        </div>
       </div>
     )
   }
 
-  if (!entered) {
+  if (mode === 'drill' && drillItem) {
+    const lines = drillItem.chain
     return (
-      <div className="gate">
-        <motion.div
-          className="gate-inner"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55 }}
-        >
-          <p className="logo">Путь</p>
-          <h1>Тригонометрия: формулы через вывод</h1>
-          <p className="sub">
-            Не справочник. По одному уроку: читаешь вывод → собираешь шаги сам →
-            отвечаешь. Старт с доказательства cos(α−β).
-          </p>
-          <button type="button" className="btn" onClick={() => setEntered(true)}>
-            Начать путь
+      <div className="wrap">
+        <div className="top">
+          <button type="button" className="link" onClick={() => setMode('list')}>
+            ← Список
           </button>
-        </motion.div>
+          <span className="meta">
+            {drillI + 1}/{drillPool.length}
+          </span>
+        </div>
+        <p className="group">{drillItem.group}</p>
+        <h1>{drillItem.name}</h1>
+        <p className="ask">Восстанови цепочку вывода по памяти</p>
+
+        {!showAns ? (
+          <div className="result dim-box">
+            <MathText text={drillItem.result} />
+          </div>
+        ) : (
+          <ol className="chain">
+            {lines.map((line, i) => (
+              <li key={i} className="on">
+                <MathText text={line} />
+              </li>
+            ))}
+          </ol>
+        )}
+
+        <div className="actions">
+          {!showAns ? (
+            <button type="button" className="btn" onClick={() => setShowAns(true)}>
+              Показать цепочку
+            </button>
+          ) : (
+            <>
+              <button
+                type="button"
+                className="btn ghost"
+                onClick={() => {
+                  setShowAns(false)
+                  setDrillI((i) => (i + 1) % drillPool.length)
+                }}
+              >
+                Не помню
+              </button>
+              <button
+                type="button"
+                className="btn"
+                onClick={() => {
+                  setProgress((p) =>
+                    p.known.includes(drillItem.id) ? p : { known: [...p.known, drillItem.id] },
+                  )
+                  setShowAns(false)
+                  setDrillI((i) => (i + 1) % drillPool.length)
+                }}
+              >
+                Помню
+              </button>
+            </>
+          )}
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="shell">
-      <header className="path-head">
-        <div>
-          <p className="logo sm">Путь</p>
-          <p className="meta">
-            {progress.done.length}/{lessons.length} · {pct}%
-          </p>
-        </div>
-        <div className="bar" aria-hidden>
-          <i style={{ width: `${pct}%` }} />
-        </div>
+    <div className="wrap">
+      <header className="hero">
+        <h1>Формулы</h1>
+        <p className="sub">
+          Список равенств. У каждой — цепочка преобразований. Учи строки подряд.
+        </p>
+        <p className="meta">
+          {progress.known.length}/{formulas.length} запомнил
+        </p>
+        <button type="button" className="btn" onClick={() => startDrill()}>
+          Тренировать все
+        </button>
       </header>
 
-      {CHAPTERS.map((ch) => {
-        const items = lessons.filter((l) => l.chapter === ch)
+      {GROUPS.map((g) => {
+        const items = formulas.filter((x) => x.group === g)
         return (
-          <section key={ch} className="chapter-block">
-            <h2>{ch}</h2>
-            <ul className="path-list">
-              {items.map((l, i) => {
-                const unlocked = isUnlocked(l, progress.done)
-                const done = doneSet.has(l.id)
-                return (
-                  <li key={l.id}>
-                    <button
-                      type="button"
-                      className={`node ${done ? 'done' : ''} ${!unlocked ? 'locked' : ''}`}
-                      disabled={!unlocked}
-                      onClick={() => setLessonId(l.id)}
-                    >
-                      <span className="idx">{done ? '✓' : i + 1}</span>
-                      <span className="node-body">
-                        <strong>{l.title}</strong>
-                        <span className="node-f">
-                          <MathText text={l.formula} />
-                        </span>
-                      </span>
-                      <span className="go">{unlocked ? (done ? 'ещё раз' : 'урок') : '🔒'}</span>
-                    </button>
-                  </li>
-                )
-              })}
+          <section key={g} className="sec">
+            <h2>{g}</h2>
+            <ul>
+              {items.map((item) => (
+                <li key={item.id}>
+                  <button type="button" className="row" onClick={() => open(item.id)}>
+                    <span className="name">
+                      {item.name}
+                      {item.base ? ' · база' : ''}
+                      {known.has(item.id) ? ' · ✓' : ''}
+                    </span>
+                    <span className="eq">
+                      <MathText text={item.result} />
+                    </span>
+                  </button>
+                </li>
+              ))}
             </ul>
           </section>
         )
