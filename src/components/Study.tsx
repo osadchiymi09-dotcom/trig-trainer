@@ -222,7 +222,7 @@ export function Drill({
               ))}
             </ol>
           ) : (
-            <p className="prompt">Как вывести из материнских?</p>
+            <p className="prompt">Как вывести? Из чего и какими шагами?</p>
           )}
         </>
       )}

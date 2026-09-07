@@ -135,7 +135,7 @@ export default function App() {
             <p className="brand">Материнские</p>
             <h1>Выучи формулы через вывод, а не зубрение</h1>
             <p className="lede">
-              Четыре формулы сложения — матери. Остальные на этом сайте выводятся из них.
+              Четыре формулы сложения — база: у них свой вывод, а из них собирается всё остальное.
             </p>
             <button
               type="button"
@@ -191,7 +191,9 @@ export default function App() {
                 Учить матерей →
               </button>
             </div>
-            <p className="muted">Выучи эти четыре — остальное собирается из них.</p>
+            <p className="muted">
+              Сначала разбери вывод сложения (от cos(α−β)), потом гоняй дочерние формулы.
+            </p>
             <div className="mother-grid">
               {mothers.map((f, idx) => (
                 <motion.button

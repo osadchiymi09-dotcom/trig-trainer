@@ -10,32 +10,40 @@
   ],
   "formulas": [
     {
-      "id": "add-sin",
-      "family": "Формулы сложения",
-      "title": "sin(α ± β)",
-      "formula": "$\\sin(\\alpha\\pm\\beta)=\\sin\\alpha\\cos\\beta\\pm\\cos\\alpha\\sin\\beta$",
-      "steps": [
-        "Это материнская формула: из неё получают двойной угол, суммы и произведения.",
-        "Структура: $\\sin\\cdot\\cos$ и $\\cos\\cdot\\sin$; знак совпадает со знаком в скобках.",
-        "Запомни обе сразу: плюс и минус отличаются только средним знаком."
-      ],
-      "mother": true,
-      "fromIds": [],
-      "tip": "Мать для sin 2α, sin α±sin β и т.д."
-    },
-    {
       "id": "add-cos",
       "family": "Формулы сложения",
       "title": "cos(α ± β)",
       "formula": "$\\cos(\\alpha\\pm\\beta)=\\cos\\alpha\\cos\\beta\\mp\\sin\\alpha\\sin\\beta$",
       "steps": [
-        "Материнская формула для косинуса.",
-        "Структура: $\\cos\\cdot\\cos$ и $\\sin\\cdot\\sin$; знак перед sin·sin противоположен скобкам.",
-        "Проверка: $\\cos(\\alpha-\\beta)$ — плюс у произведения синусов."
+        "На единичной окружности точки $A(\\cos\\alpha;\\sin\\alpha)$ и $B(\\cos\\beta;\\sin\\beta)$.",
+        "Скалярное произведение $\\overrightarrow{OA}\\cdot\\overrightarrow{OB}=\\cos\\alpha\\cos\\beta+\\sin\\alpha\\sin\\beta$.",
+        "С другой стороны угол между лучами равен $\\alpha-\\beta$, поэтому $\\overrightarrow{OA}\\cdot\\overrightarrow{OB}=\\cos(\\alpha-\\beta)$.",
+        "Итого база: $\\cos(\\alpha-\\beta)=\\cos\\alpha\\cos\\beta+\\sin\\alpha\\sin\\beta$.",
+        "Плюс: $\\cos(\\alpha+\\beta)=\\cos(\\alpha-(-\\beta))=\\cos\\alpha\\cos\\beta-\\sin\\alpha\\sin\\beta$.",
+        "Коротко: $\\cos(\\alpha\\pm\\beta)=\\cos\\alpha\\cos\\beta\\mp\\sin\\alpha\\sin\\beta$."
       ],
       "mother": true,
       "fromIds": [],
-      "tip": "Мать для cos 2α и понижения степени"
+      "tip": "Корень всей ветки: сначала cos(α−β) через скалярное произведение"
+    },
+    {
+      "id": "add-sin",
+      "family": "Формулы сложения",
+      "title": "sin(α ± β)",
+      "formula": "$\\sin(\\alpha\\pm\\beta)=\\sin\\alpha\\cos\\beta\\pm\\cos\\alpha\\sin\\beta$",
+      "steps": [
+        "Связь: $\\sin x=\\cos(\\pi/2-x)$.",
+        "Тогда $\\sin(\\alpha-\\beta)=\\cos\\bigl(\\pi/2-(\\alpha-\\beta)\\bigr)=\\cos\\bigl((\\pi/2-\\alpha)+\\beta\\bigr)$.",
+        "Раскрой через уже доказанный $\\cos(u+v)$: $\\cos(\\pi/2-\\alpha)\\cos\\beta-\\sin(\\pi/2-\\alpha)\\sin\\beta$.",
+        "Подставь $\\cos(\\pi/2-\\alpha)=\\sin\\alpha$, $\\sin(\\pi/2-\\alpha)=\\cos\\alpha$.",
+        "Получи $\\sin(\\alpha-\\beta)=\\sin\\alpha\\cos\\beta-\\cos\\alpha\\sin\\beta$.",
+        "Плюс: $\\sin(\\alpha+\\beta)=\\sin(\\alpha-(-\\beta))=\\sin\\alpha\\cos\\beta+\\cos\\alpha\\sin\\beta$."
+      ],
+      "mother": true,
+      "fromIds": [
+        "add-cos"
+      ],
+      "tip": "Выводится из cos(α±β) через sin x = cos(π/2 − x)"
     },
     {
       "id": "add-tg",
@@ -43,16 +51,18 @@
       "title": "tg(α ± β)",
       "formula": "$\\operatorname{tg}(\\alpha\\pm\\beta)=\\dfrac{\\operatorname{tg}\\alpha\\pm\\operatorname{tg}\\beta}{1\\mp\\operatorname{tg}\\alpha\\operatorname{tg}\\beta}$",
       "steps": [
-        "Берём $\\operatorname{tg}(\\alpha+\\beta)=\\sin(\\alpha+\\beta)/\\cos(\\alpha+\\beta)$.",
-        "Подставляем материнские sin и cos сложения.",
-        "Делим числитель и знаменатель на $\\cos\\alpha\\cos\\beta$ → получаем формулу через tg."
+        "По определению $\\operatorname{tg}(\\alpha+\\beta)=\\dfrac{\\sin(\\alpha+\\beta)}{\\cos(\\alpha+\\beta)}$.",
+        "Подставь уже доказанные формулы sin и cos сложения.",
+        "Раздели числитель и знаменатель на $\\cos\\alpha\\cos\\beta$ (где определено).",
+        "Числитель → $\\operatorname{tg}\\alpha+\\operatorname{tg}\\beta$, знаменатель → $1-\\operatorname{tg}\\alpha\\operatorname{tg}\\beta$.",
+        "Для минуса знак в числителе и у произведения в знаменателе меняются согласованно."
       ],
       "mother": true,
       "fromIds": [
         "add-sin",
         "add-cos"
       ],
-      "tip": "Сама из sin/cos сложения"
+      "tip": "Частное sin/cos сложения"
     },
     {
       "id": "add-ctg",
@@ -60,8 +70,11 @@
       "title": "ctg(α ± β)",
       "formula": "$\\operatorname{ctg}(\\alpha\\pm\\beta)=\\dfrac{\\operatorname{ctg}\\alpha\\operatorname{ctg}\\beta\\mp 1}{\\operatorname{ctg}\\beta\\pm\\operatorname{ctg}\\alpha}$",
       "steps": [
-        "Аналогично tg: $\\operatorname{ctg}=\\cos/\\sin$, подставь материнские cos и sin.",
-        "Или через $\\operatorname{ctg}=1/\\operatorname{tg}$ от формулы tg(α±β)."
+        "$\\operatorname{ctg}(\\alpha+\\beta)=\\dfrac{\\cos(\\alpha+\\beta)}{\\sin(\\alpha+\\beta)}$.",
+        "Подставь формулы cos и sin сложения.",
+        "Раздели числитель и знаменатель на $\\sin\\alpha\\sin\\beta$.",
+        "Получи $\\dfrac{\\operatorname{ctg}\\alpha\\operatorname{ctg}\\beta-1}{\\operatorname{ctg}\\beta+\\operatorname{ctg}\\alpha}$.",
+        "Либо проще: $\\operatorname{ctg}=1/\\operatorname{tg}$ от уже выведенной формулы tg(α±β)."
       ],
       "mother": true,
       "fromIds": [
