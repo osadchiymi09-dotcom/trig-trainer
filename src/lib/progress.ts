@@ -1,70 +1,61 @@
-import type { CardState, ProgressState } from '../types'
+import type { Lesson } from '../data/lessons'
+import { lessons } from '../data/lessons'
 
-const KEY = 'trig-mother-progress-v2'
-
-export function todayKey(): string {
-  return new Date().toISOString().slice(0, 10)
+export type Progress = {
+  /** lesson ids fully passed (proof + check) */
+  done: string[]
+  /** optional free practice scores */
+  updatedAt: string
 }
 
-export function defaultProgress(): ProgressState {
-  return { cards: {}, known: [], derived: [], streak: 0, lastStudyDay: '' }
-}
+const KEY = 'trig-path-v1'
 
-export function loadProgress(): ProgressState {
+export function loadProgress(): Progress {
   try {
     const raw = localStorage.getItem(KEY)
-    if (!raw) return defaultProgress()
-    return { ...defaultProgress(), ...JSON.parse(raw) }
+    if (!raw) return { done: [], updatedAt: '' }
+    const p = JSON.parse(raw) as Progress
+    return { done: p.done ?? [], updatedAt: p.updatedAt ?? '' }
   } catch {
-    return defaultProgress()
+    return { done: [], updatedAt: '' }
   }
 }
 
-export function saveProgress(p: ProgressState): void {
-  localStorage.setItem(KEY, JSON.stringify(p))
+export function saveProgress(p: Progress) {
+  localStorage.setItem(KEY, JSON.stringify({ ...p, updatedAt: new Date().toISOString() }))
 }
 
-export function touchStreak(p: ProgressState): ProgressState {
-  const today = todayKey()
-  if (p.lastStudyDay === today) return p
-  const yesterday = new Date()
-  yesterday.setDate(yesterday.getDate() - 1)
-  const yKey = yesterday.toISOString().slice(0, 10)
-  const streak = p.lastStudyDay === yKey ? p.streak + 1 : 1
-  return { ...p, streak, lastStudyDay: today }
+export function markDone(id: string, prev: Progress): Progress {
+  if (prev.done.includes(id)) return prev
+  return { ...prev, done: [...prev.done, id] }
 }
 
-export function reviewCard(state: CardState | undefined, grade: 0 | 1 | 2 | 3): CardState {
-  const now = Date.now()
-  let ease = state?.ease ?? 2.5
-  let interval = state?.interval ?? 0
-  let reps = state?.reps ?? 0
-  let lapses = state?.lapses ?? 0
+/** Soft unlock: first always open; else previous in list done OR any earlier in same chapter */
+export function isUnlocked(lesson: Lesson, done: string[]): boolean {
+  const idx = lessons.findIndex((l) => l.id === lesson.id)
+  if (idx <= 0) return true
+  // unlock if previous lesson done
+  if (done.includes(lessons[idx - 1].id)) return true
+  // or if user already completed this one
+  if (done.includes(lesson.id)) return true
+  return false
+}
 
-  if (grade < 2) {
-    reps = 0
-    lapses += 1
-    interval = 0
-    ease = Math.max(1.3, ease - 0.2)
-    return { ease, interval, reps, lapses, due: now + 10 * 60 * 1000 }
+export function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
   }
-
-  if (reps === 0) interval = 1
-  else if (reps === 1) interval = 3
-  else interval = Math.round(interval * ease)
-
-  ease = Math.max(1.3, ease + (0.1 - (3 - grade) * (0.08 + (3 - grade) * 0.02)))
-  reps += 1
-  return { ease, interval, reps, lapses, due: now + interval * 24 * 60 * 60 * 1000 }
+  return a
 }
 
-export function isDue(state: CardState | undefined): boolean {
-  if (!state) return true
-  return state.due <= Date.now()
-}
-
-export function masteryPercent(p: ProgressState, n: number): number {
-  if (n <= 0) return 0
-  const k = new Set([...p.known, ...p.derived]).size
-  return Math.round((k / n) * 100)
+export function norm(s: string): string {
+  return s
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/\\operatorname\{([^}]+)\}/g, '$1')
+    .replace(/\\/g, '')
+    .replace(/[{}]/g, '')
 }
